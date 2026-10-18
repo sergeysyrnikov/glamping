@@ -1,0 +1,1890 @@
+<header class="vb-v4x" id="vb-v4x-nav" data-section-name="Навигация" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-v4x, .vb-v4x * { box-sizing: border-box; }
+		.vb-v4x {
+			position: fixed;
+			inset: 0 0 auto 0;
+			z-index: 90;
+			font-family: var(--t-text-font);
+			transition: background-color .45s ease, box-shadow .45s ease, padding .45s ease;
+			padding: 18px 0;
+		}
+		.vb-v4x__inner {
+			max-width: 1280px;
+			margin: 0 auto;
+			padding: 0 28px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 24px;
+		}
+		.vb-v4x--solid {
+			background: rgba(240, 233, 221, .94);
+			backdrop-filter: blur(8px);
+			box-shadow: 0 1px 0 rgba(42, 42, 36, .12);
+			padding: 12px 0;
+		}
+		.vb-v4x__logo {
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			text-decoration: none;
+			color: #F6F0E4;
+			transition: color .4s ease;
+		}
+		.vb-v4x--solid .vb-v4x__logo { color: #2A2A24; }
+		.vb-v4x__logo svg { width: 30px; height: 30px; flex: none; }
+		.vb-v4x__logo-text {
+			font-family: var(--t-headline-font);
+			font-size: 17px;
+			letter-spacing: .14em;
+			text-transform: uppercase;
+			line-height: 1.1;
+		}
+		.vb-v4x__logo-sub {
+			display: block;
+			font-family: var(--t-text-font);
+			font-size: 10px;
+			letter-spacing: .22em;
+			text-transform: uppercase;
+			opacity: .72;
+			margin-top: 3px;
+		}
+		.vb-v4x__list {
+			display: flex;
+			align-items: center;
+			gap: 26px;
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.vb-v4x__link {
+			position: relative;
+			color: #F6F0E4;
+			text-decoration: none;
+			font-size: 14px;
+			letter-spacing: .02em;
+			padding: 6px 0;
+			transition: color .4s ease;
+		}
+		.vb-v4x--solid .vb-v4x__link { color: #3A3A31; }
+		.vb-v4x__link::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			width: 100%;
+			height: 1px;
+			background: currentColor;
+			transform: scaleX(0);
+			transform-origin: right;
+			transition: transform .35s ease;
+		}
+		.vb-v4x__link:hover::after,
+		.vb-v4x__link:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+		.vb-v4x__cta { flex: none; }
+		.vb-v4x__burger {
+			display: none;
+			width: 46px;
+			height: 46px;
+			border: 1px solid rgba(246, 240, 228, .45);
+			background: transparent;
+			border-radius: 10px;
+			align-items: center;
+			justify-content: center;
+			cursor: pointer;
+			padding: 0;
+		}
+		.vb-v4x--solid .vb-v4x__burger { border-color: rgba(42, 42, 36, .3); }
+		.vb-v4x__burger span {
+			display: block;
+			width: 20px;
+			height: 1.6px;
+			background: #F6F0E4;
+			position: relative;
+			transition: background .3s ease;
+		}
+		.vb-v4x--solid .vb-v4x__burger span { background: #2A2A24; }
+		.vb-v4x__burger span::before,
+		.vb-v4x__burger span::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			width: 20px;
+			height: 1.6px;
+			background: inherit;
+			transition: transform .35s ease, top .35s ease;
+		}
+		.vb-v4x__burger span::before { top: -6px; }
+		.vb-v4x__burger span::after { top: 6px; }
+		.vb-v4x__burger[aria-expanded="true"] span { background: transparent; }
+		.vb-v4x__burger[aria-expanded="true"] span::before { top: 0; background: #2A2A24; transform: rotate(45deg); }
+		.vb-v4x__burger[aria-expanded="true"] span::after { top: 0; background: #2A2A24; transform: rotate(-45deg); }
+		.vb-v4x__panel {
+			position: fixed;
+			inset: 0;
+			background: #EFE7DA;
+			padding: 110px 30px 40px;
+			display: none;
+			flex-direction: column;
+			gap: 6px;
+			z-index: 89;
+		}
+		.vb-v4x__panel.is-open { display: flex; }
+		.vb-v4x__panel-link {
+			font-family: var(--t-headline-font);
+			font-size: 26px;
+			color: #2A2A24;
+			text-decoration: none;
+			padding: 14px 0;
+			border-bottom: 1px solid rgba(42, 42, 36, .12);
+			min-height: 56px;
+			display: flex;
+			align-items: center;
+		}
+		.vb-v4x__panel-foot {
+			margin-top: auto;
+			font-size: 14px;
+			color: #6B6A5F;
+			line-height: 1.6;
+		}
+		.vb-v4x__panel-foot a { color: #8A4A20; }
+		@media (max-width: 1040px) {
+			.vb-v4x__list, .vb-v4x__cta { display: none; }
+			.vb-v4x__burger { display: inline-flex; }
+			.vb-v4x { padding: 12px 0; }
+			.vb-v4x:not(.vb-v4x--solid) .vb-v4x__burger { border-color: rgba(246,240,228,.5); }
+		}
+		@media (max-width: 480px) {
+			.vb-v4x__inner { padding: 0 18px; }
+			.vb-v4x__logo-text { font-size: 14px; }
+		}
+	</style>
+	<div class="vb-v4x__inner">
+		<a class="vb-v4x__logo" href="#vb-k7p-hero" data-scroll>
+			<svg viewBox="0 0 32 32" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.4">
+				<path d="M16 3l7 11h-4l5 8h-5l4 7H9l4-7h-5l5-8H9l7-11z" stroke-linejoin="round"/>
+				<path d="M16 29v-4" stroke-linecap="round"/>
+			</svg>
+			<span class="vb-v4x__logo-text">Сосновый берег<span class="vb-v4x__logo-sub">Глэмпинг · Тульская область</span></span>
+		</a>
+		<nav aria-label="Основная навигация">
+			<ul class="vb-v4x__list">
+				<li><a class="vb-v4x__link" href="#vb-m3q-about" data-scroll>О нас</a></li>
+				<li><a class="vb-v4x__link" href="#vb-r8d-rooms" data-scroll>Номера и цены</a></li>
+				<li><a class="vb-v4x__link" href="#vb-t5w-activities" data-scroll>Активности</a></li>
+				<li><a class="vb-v4x__link" href="#vb-y2n-reviews" data-scroll>Отзывы</a></li>
+				<li><a class="vb-v4x__link" href="#vb-h9z-contacts" data-scroll>Как добраться</a></li>
+			</ul>
+		</nav>
+		<a class="t-btnflex t-btnflex_sm vb-v4x__cta" href="#vb-f6c-booking" data-scroll>
+			<span class="t-btnflex__text">Забронировать</span>
+		</a>
+		<button class="vb-v4x__burger" type="button" aria-expanded="false" aria-controls="vb-v4x-panel" aria-label="Открыть меню"><span></span></button>
+	</div>
+	<div class="vb-v4x__panel" id="vb-v4x-panel">
+		<a class="vb-v4x__panel-link" href="#vb-m3q-about" data-scroll>О нас</a>
+		<a class="vb-v4x__panel-link" href="#vb-r8d-rooms" data-scroll>Номера и цены</a>
+		<a class="vb-v4x__panel-link" href="#vb-t5w-activities" data-scroll>Активности и услуги</a>
+		<a class="vb-v4x__panel-link" href="#vb-y2n-reviews" data-scroll>Отзывы гостей</a>
+		<a class="vb-v4x__panel-link" href="#vb-h9z-contacts" data-scroll>Как добраться</a>
+		<a class="vb-v4x__panel-link" href="#vb-f6c-booking" data-scroll>Забронировать</a>
+		<p class="vb-v4x__panel-foot">Тульская область, у озера Сосновое<br><a href="tel:+74991124567">+7 (499) 112-45-67</a> · 8:00–22:00</p>
+	</div>
+	<script>
+		(function () {
+			var root = document.getElementById('vb-v4x-nav');
+			var burger = root.querySelector('.vb-v4x__burger');
+			var panel = root.querySelector('.vb-v4x__panel');
+
+			function setSolid() {
+				if (window.scrollY > 60) { root.classList.add('vb-v4x--solid'); }
+				else { root.classList.remove('vb-v4x--solid'); }
+			}
+			setSolid();
+			window.addEventListener('scroll', setSolid, { passive: true });
+
+			function closeMenu() {
+				panel.classList.remove('is-open');
+				burger.setAttribute('aria-expanded', 'false');
+				burger.setAttribute('aria-label', 'Открыть меню');
+				document.documentElement.style.overflow = '';
+			}
+			burger.addEventListener('click', function () {
+				var open = burger.getAttribute('aria-expanded') === 'true';
+				if (open) { closeMenu(); }
+				else {
+					panel.classList.add('is-open');
+					burger.setAttribute('aria-expanded', 'true');
+					burger.setAttribute('aria-label', 'Закрыть меню');
+					document.documentElement.style.overflow = 'hidden';
+				}
+			});
+			panel.addEventListener('click', function (e) {
+				if (e.target.closest('a')) { closeMenu(); }
+			});
+			document.addEventListener('keydown', function (e) {
+				if (e.key === 'Escape' && panel.classList.contains('is-open')) {
+					closeMenu();
+					burger.focus();
+				}
+			});
+			root.querySelectorAll('a[href^="#"]').forEach(function (a) {
+				a.addEventListener('click', function (e) {
+					var target = document.querySelector(a.getAttribute('href'));
+					if (!target) { return; }
+					e.preventDefault();
+					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+				});
+			});
+		})();
+	</script>
+</header>
+
+<section class="vb-k7p" id="vb-k7p-hero" aria-labelledby="vb-k7p-title" data-section-name="Обложка" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-k7p, .vb-k7p * { box-sizing: border-box; }
+		.vb-k7p {
+			position: relative;
+			min-height: 100svh;
+			display: flex;
+			align-items: flex-end;
+			overflow: hidden;
+			background: #2C332B;
+			font-family: var(--t-text-font);
+			color: #F6F0E4;
+		}
+		.vb-k7p__bg {
+			position: absolute;
+			inset: 0;
+			background-image: url('https://static.tildacdn.pub/tild3333-3536-4263-b161-353136633462/photo-1512923927402-.jpg');
+			background-size: cover;
+			background-position: center 60%;
+			transform: scale(1.06);
+			animation: vb-k7p-drift 24s ease-in-out infinite alternate;
+		}
+		@keyframes vb-k7p-drift {
+			from { transform: scale(1.06) translate3d(0, 0, 0); }
+			to { transform: scale(1.14) translate3d(-1.5%, -1.5%, 0); }
+		}
+		.vb-k7p__scrim {
+			position: absolute;
+			inset: 0;
+			background:
+				linear-gradient(180deg, rgba(24, 28, 22, .62) 0%, rgba(24, 28, 22, .18) 34%, rgba(24, 28, 22, .28) 58%, rgba(22, 26, 20, .82) 100%);
+		}
+		.vb-k7p__content {
+			position: relative;
+			z-index: 2;
+			width: 100%;
+			max-width: 1280px;
+			margin: 0 auto;
+			padding: 150px 28px 56px;
+		}
+		.vb-k7p__badge {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			font-size: 12px;
+			letter-spacing: .2em;
+			text-transform: uppercase;
+			border: 1px solid rgba(246, 240, 228, .4);
+			border-radius: 100px;
+			padding: 8px 16px;
+			margin-bottom: 26px;
+		}
+		.vb-k7p__badge svg { width: 14px; height: 14px; }
+		.vb-k7p__title {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: clamp(38px, 6.4vw, 82px);
+			line-height: 1.04;
+			letter-spacing: .005em;
+			max-width: 15ch;
+			margin: 0 0 22px;
+			text-wrap: balance;
+		}
+		.vb-k7p__title em { font-style: italic; color: #E9C79A; }
+		.vb-k7p__offer {
+			font-size: clamp(16px, 1.6vw, 20px);
+			line-height: 1.55;
+			max-width: 44ch;
+			margin: 0 0 34px;
+			color: rgba(246, 240, 228, .9);
+		}
+		.vb-k7p__actions {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 14px;
+			margin-bottom: 46px;
+		}
+		.vb-k7p__ghost {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			min-height: 54px;
+			padding: 0 30px;
+			border: 1px solid rgba(246, 240, 228, .55);
+			border-radius: 6px;
+			color: #F6F0E4;
+			text-decoration: none;
+			font-size: 15px;
+			letter-spacing: .04em;
+			transition: background-color .35s ease, border-color .35s ease, transform .35s ease;
+		}
+		.vb-k7p__ghost:hover { background: rgba(246, 240, 228, .12); border-color: #F6F0E4; transform: translateY(-2px); }
+		.vb-k7p__facts {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px 28px;
+			list-style: none;
+			margin: 0;
+			padding: 22px 0 0;
+			border-top: 1px solid rgba(246, 240, 228, .22);
+		}
+		.vb-k7p__facts li {
+			display: flex;
+			align-items: center;
+			gap: 9px;
+			font-size: 14px;
+			letter-spacing: .04em;
+			color: rgba(246, 240, 228, .86);
+		}
+		.vb-k7p__facts svg { width: 15px; height: 15px; opacity: .8; flex: none; }
+		@media (max-width: 960px) {
+			.vb-k7p__content { padding: 130px 24px 44px; }
+		}
+		@media (max-width: 640px) {
+			.vb-k7p__content { padding: 120px 18px 36px; }
+			.vb-k7p__actions { flex-direction: column; align-items: stretch; }
+			.vb-k7p__ghost { width: 100%; }
+			.vb-k7p__facts { gap: 12px; flex-direction: column; }
+		}
+		@media (prefers-reduced-motion: reduce) {
+			.vb-k7p__bg { animation: none; }
+		}
+	</style>
+	<div class="vb-k7p__bg" role="img" aria-label="Лоджи у озера на рассвете, туман над водой в сосновом лесу"></div>
+	<div class="vb-k7p__scrim"></div>
+	<div class="vb-k7p__content">
+		<span class="vb-k7p__badge">
+			<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M16 4l6 10h-3.6l4.2 7h-4.4l3.4 6H10.4l3.4-6H9.4l4.2-7H10l6-10z" stroke-linejoin="round"/></svg>
+			Сосновый берег · сезон май — октябрь
+		</span>
+		<h1 class="vb-k7p__title" id="vb-k7p-title">Тишина, вода и <em>сосновый</em> воздух</h1>
+		<p class="vb-k7p__offer">Глэмпинг в сосновом лесу у озера — 90 минут от Москвы, Тульская область. Двенадцать лоджей и шатров, печи, чай на травах и никаких уведомлений.</p>
+		<div class="vb-k7p__actions">
+			<a class="t-btnflex t-btnflex_lg" href="#vb-f6c-booking" data-scroll>
+				<span class="t-btnflex__text">Забронировать</span>
+			</a>
+			<a class="vb-k7p__ghost" href="#vb-r8d-rooms" data-scroll>Номера и цены</a>
+		</div>
+		<ul class="vb-k7p__facts">
+			<li>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 20l9-16 9 16H3z" stroke-linejoin="round"/></svg>
+				12 лоджей и шатров
+			</li>
+			<li>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 15c2.5-2 5-2 7.5 0s5 2 7.5 0 3-1.5 3-1.5M3 19c2.5-2 5-2 7.5 0s5 2 7.5 0" stroke-linecap="round"/><path d="M12 4v5" stroke-linecap="round"/></svg>
+				Озеро Сосновое, 40 м до воды
+			</li>
+			<li>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M12 3c2 3-1 4 0 6 .8 1.6 3 1.4 3 4a4 4 0 11-8 0c0-3 3-3.5 3-6 0-1.5-1-2.5 2-4z" stroke-linejoin="round"/></svg>
+				Баня на дровах
+			</li>
+			<li>
+				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M4 4l16 16M8.5 8.5A4.5 4.5 0 0012 15a4.5 4.5 0 003.2-1.3M6 6.2A9 9 0 0012 21c1.6 0 3-.5 4.2-1.2" stroke-linecap="round"/></svg>
+				Без Wi-Fi по вечерам
+			</li>
+		</ul>
+	</div>
+	<script>
+		(function () {
+			var root = document.getElementById('vb-k7p-hero');
+			root.querySelectorAll('[data-scroll]').forEach(function (a) {
+				a.addEventListener('click', function (e) {
+					var target = document.querySelector(a.getAttribute('href'));
+					if (!target) { return; }
+					e.preventDefault();
+					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+				});
+			});
+		})();
+	</script>
+</section>
+
+<section class="vb-m3q" id="vb-m3q-about" aria-labelledby="vb-m3q-title" data-section-name="О нас" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-m3q, .vb-m3q * { box-sizing: border-box; }
+		.vb-m3q {
+			background: #F1E9DC;
+			color: #2A2A24;
+			font-family: var(--t-text-font);
+			padding: clamp(72px, 10vw, 130px) 24px;
+		}
+		.vb-m3q__wrap { max-width: 1280px; margin: 0 auto; }
+		.vb-m3q__grid {
+			display: grid;
+			grid-template-columns: 1.05fr .95fr;
+			gap: clamp(36px, 6vw, 90px);
+			align-items: center;
+		}
+		.vb-m3q__eyebrow {
+			font-size: 12px;
+			letter-spacing: .24em;
+			text-transform: uppercase;
+			color: #7A6A52;
+			margin: 0 0 18px;
+		}
+		.vb-m3q__title {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: clamp(30px, 4vw, 52px);
+			line-height: 1.12;
+			margin: 0 0 24px;
+			text-wrap: balance;
+		}
+		.vb-m3q__title em { font-style: italic; color: #3C5A3E; }
+		.vb-m3q__text {
+			font-size: 17px;
+			line-height: 1.72;
+			color: #4A4A40;
+			margin: 0 0 18px;
+			max-width: 58ch;
+		}
+		.vb-m3q__stats {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 18px;
+			margin: 34px 0 0;
+			padding: 0;
+			list-style: none;
+		}
+		.vb-m3q__stats li {
+			border-top: 1px solid rgba(42, 42, 36, .18);
+			padding-top: 14px;
+		}
+		.vb-m3q__stats b {
+			display: block;
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: 26px;
+			color: #8A4A20;
+			margin-bottom: 6px;
+		}
+		.vb-m3q__stats span { font-size: 13.5px; line-height: 1.5; color: #6B6A5F; }
+		.vb-m3q__media { position: relative; }
+		.vb-m3q__figure {
+			margin: 0;
+			border-radius: 4px;
+			overflow: hidden;
+			aspect-ratio: 4 / 5;
+		}
+		.vb-m3q__figure img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform 1.2s cubic-bezier(.2,.7,.2,1);
+		}
+		.vb-m3q__figure:hover img { transform: scale(1.05); }
+		.vb-m3q__figure--small {
+			position: absolute;
+			right: -18px;
+			bottom: -34px;
+			width: 46%;
+			aspect-ratio: 1 / 1;
+			border: 8px solid #F1E9DC;
+		}
+		.vb-m3q__eco {
+			margin-top: clamp(56px, 8vw, 100px);
+			display: grid;
+			grid-template-columns: repeat(4, 1fr);
+			gap: 22px;
+		}
+		.vb-m3q__eco-item {
+			background: #E9DFCE;
+			border-radius: 4px;
+			padding: 26px 24px 28px;
+			transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease;
+		}
+		.vb-m3q__eco-item:hover { transform: translateY(-6px); box-shadow: 0 18px 40px -22px rgba(42, 42, 36, .5); }
+		.vb-m3q__eco-item img { width: 26px; height: 26px; margin-bottom: 16px; opacity: .8; }
+		.vb-m3q__eco-item h3 {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: 19px;
+			margin: 0 0 8px;
+		}
+		.vb-m3q__eco-item p { margin: 0; font-size: 14.5px; line-height: 1.6; color: #5C5C51; }
+		.vb-m3q__season {
+			margin-top: 30px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 14px 30px;
+			align-items: center;
+			font-size: 15px;
+			line-height: 1.6;
+			color: #4A4A40;
+		}
+		.vb-m3q__season strong { color: #2A2A24; }
+		@media (max-width: 960px) {
+			.vb-m3q__grid { grid-template-columns: 1fr; }
+			.vb-m3q__media { order: -1; max-width: 520px; }
+			.vb-m3q__figure--small { width: 40%; right: 0; bottom: -24px; }
+			.vb-m3q__eco { grid-template-columns: repeat(2, 1fr); }
+		}
+		@media (max-width: 640px) {
+			.vb-m3q { padding: 64px 18px; }
+			.vb-m3q__stats { grid-template-columns: 1fr; gap: 12px; }
+			.vb-m3q__eco { grid-template-columns: 1fr; }
+			.vb-m3q__figure--small { display: none; }
+		}
+	</style>
+	<div class="vb-m3q__wrap">
+		<div class="vb-m3q__grid vb-reveal">
+			<div>
+				<p class="vb-m3q__eyebrow">О нас</p>
+				<h2 class="vb-m3q__title" id="vb-m3q-title">Простая жизнь <em>без отказа</em> от комфорта</h2>
+				<p class="vb-m3q__text">Мы поставили лоджи на берегу озера Сосновое так, чтобы из каждого окна были сосны и вода. Внутри — тёплое дерево, льняное бельё, печь и чайная станция с травами с нашего луга. Никаких мини-баров, телевизоров и расписаний анимации: только тишина, простота и возвращение к природе.</p>
+				<p class="vb-m3q__text">От МКАД по Калужскому шоссе — 120 км, около 90 минут без пробок. Тула в 65 км: доехать за час за хлебом и сыром, если захотите.</p>
+				<ul class="vb-m3q__stats">
+					<li><b>90 минут</b><span>от МКАД по Калужскому шоссе</span></li>
+					<li><b>65 км</b><span>до Тулы, фермерские рынки и сыры</span></li>
+					<li><b>40 м</b><span>от лоджей до берега озера</span></li>
+				</ul>
+			</div>
+			<div class="vb-m3q__media">
+				<figure class="vb-m3q__figure">
+					<img src="https://static.tildacdn.pub/tild3830-6437-4162-b939-346231326139/photo-1477862096227-.jpg" alt="Сосновый бор в утреннем свете" loading="lazy">
+				</figure>
+				<figure class="vb-m3q__figure vb-m3q__figure--small">
+					<img src="https://static.tildacdn.pub/tild6161-3361-4564-b763-323164363231/photo-1591195854242-.jpg" alt="Льняное бельё и плед в лодже" loading="lazy">
+				</figure>
+			</div>
+		</div>
+
+		<div class="vb-m3q__eco">
+			<article class="vb-m3q__eco-item vb-reveal">
+				<img src="https://static.tildacdn.pub/lib/icons/tilda/tree_trees.svg" alt="" aria-hidden="true">
+				<h3>Только дерево и тент</h3>
+				<p>Мы не строим бетон. Фундамент — винтовые сваи, стены — сосна и тентовая ткань, разобрать можно за сезон.</p>
+			</article>
+			<article class="vb-m3q__eco-item vb-reveal">
+				<img src="https://static.tildacdn.pub/lib/icons/tilda/wi-fi_wifi_network_internet.svg" alt="" aria-hidden="true">
+				<h3>Сеть по расписанию</h3>
+				<p>Роутер работает в ресепшене с 8:00 до 20:00. В лоджах — только мобильная связь, по вечерам тишина.</p>
+			</article>
+			<article class="vb-m3q__eco-item vb-reveal">
+				<img src="https://static.tildacdn.pub/lib/icons/tilda/fire_bonfire.svg" alt="" aria-hidden="true">
+				<h3>Биоразлагаемая химия</h3>
+				<p>Гели для душа и стиральные средства на растительной основе, вода из скважины уходит на полив после очистки.</p>
+			</article>
+			<article class="vb-m3q__eco-item vb-reveal">
+				<img src="https://static.tildacdn.pub/lib/icons/tilda/marker_location_place_where.svg" alt="" aria-hidden="true">
+				<h3>Сортировка отходов</h3>
+				<p>Пластик, стекло и бумага раздельно, компост — на огороде. Мусор вывозим в посёлок каждый вторник.</p>
+			</article>
+		</div>
+
+		<p class="vb-m3q__season vb-reveal">
+			<span><strong>Сезон:</strong> май — октябрь, купание с конца июня.</span>
+			<span><strong>Зима:</strong> открываем даты с печкой с декабря по февраль, по 4 лоджи.</span>
+		</p>
+	</div>
+</section>
+
+<section class="vb-r8d" id="vb-r8d-rooms" aria-labelledby="vb-r8d-title" data-section-name="Номера и цены" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-r8d, .vb-r8d * { box-sizing: border-box; }
+		.vb-r8d {
+			background: #EDE4D4;
+			color: #2A2A24;
+			font-family: var(--t-text-font);
+			padding: clamp(72px, 10vw, 130px) 24px;
+		}
+		.vb-r8d__wrap { max-width: 1280px; margin: 0 auto; }
+		.vb-r8d__head { max-width: 62ch; margin-bottom: 42px; }
+		.vb-r8d__eyebrow {
+			font-size: 12px;
+			letter-spacing: .24em;
+			text-transform: uppercase;
+			color: #7A6A52;
+			margin: 0 0 18px;
+		}
+		.vb-r8d__title {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: clamp(30px, 4vw, 52px);
+			line-height: 1.12;
+			margin: 0 0 16px;
+			text-wrap: balance;
+		}
+		.vb-r8d__title em { font-style: italic; color: #3C5A3E; }
+		.vb-r8d__lead { font-size: 16.5px; line-height: 1.7; color: #56564B; margin: 0; }
+		.vb-r8d__tabs {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-bottom: 34px;
+			border-bottom: 1px solid rgba(42, 42, 36, .16);
+			padding-bottom: 14px;
+		}
+		.vb-r8d__tab {
+			appearance: none;
+			border: 1px solid rgba(42, 42, 36, .22);
+			background: transparent;
+			color: #4A4A40;
+			font-family: var(--t-text-font);
+			font-size: 14.5px;
+			letter-spacing: .02em;
+			padding: 12px 20px;
+			min-height: 48px;
+			border-radius: 100px;
+			cursor: pointer;
+			transition: background-color .35s ease, color .35s ease, border-color .35s ease;
+		}
+		.vb-r8d__tab:hover { border-color: #3C5A3E; color: #2A2A24; }
+		.vb-r8d__tab[aria-selected="true"] {
+			background: #3C5A3E;
+			border-color: #3C5A3E;
+			color: #F3EDE1;
+		}
+		.vb-r8d__panel[hidden] { display: none; }
+		.vb-r8d__banner {
+			position: relative;
+			border-radius: 4px;
+			overflow: hidden;
+			margin-bottom: 30px;
+			aspect-ratio: 21 / 8;
+			min-height: 220px;
+		}
+		.vb-r8d__banner img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform 1.4s cubic-bezier(.2,.7,.2,1);
+		}
+		.vb-r8d__banner:hover img { transform: scale(1.06); }
+		.vb-r8d__banner figcaption {
+			position: absolute;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			padding: 40px 26px 20px;
+			background: linear-gradient(180deg, rgba(26,30,24,0) 0%, rgba(26,30,24,.78) 100%);
+			color: #F6F0E4;
+			font-size: 14px;
+			letter-spacing: .04em;
+		}
+		.vb-r8d__grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 22px;
+		}
+		.vb-r8d__card {
+			background: #F5EFE3;
+			border-radius: 4px;
+			padding: 28px 26px 26px;
+			display: flex;
+			flex-direction: column;
+			gap: 14px;
+			transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease;
+		}
+		.vb-r8d__card:hover { transform: translateY(-6px); box-shadow: 0 22px 44px -26px rgba(42, 42, 36, .55); }
+		.vb-r8d__card-top {
+			display: flex;
+			justify-content: space-between;
+			align-items: baseline;
+			gap: 16px;
+		}
+		.vb-r8d__card h3 {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: 23px;
+			margin: 0;
+		}
+		.vb-r8d__area {
+			font-size: 12.5px;
+			letter-spacing: .1em;
+			text-transform: uppercase;
+			color: #7A6A52;
+			white-space: nowrap;
+		}
+		.vb-r8d__meta {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.vb-r8d__meta li {
+			font-size: 13px;
+			color: #56564B;
+			background: rgba(60, 90, 62, .1);
+			border-radius: 100px;
+			padding: 6px 12px;
+		}
+		.vb-r8d__equip {
+			margin: 0;
+			padding: 0 0 0 18px;
+			color: #56564B;
+			font-size: 14.5px;
+			line-height: 1.62;
+		}
+		.vb-r8d__card-foot {
+			margin-top: auto;
+			padding-top: 16px;
+			border-top: 1px solid rgba(42, 42, 36, .14);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 14px;
+			flex-wrap: wrap;
+		}
+		.vb-r8d__price {
+			font-family: var(--t-headline-font);
+			font-size: 21px;
+			color: #8A4A20;
+		}
+		.vb-r8d__price small {
+			display: block;
+			font-family: var(--t-text-font);
+			font-size: 12.5px;
+			color: #7A6A52;
+			margin-top: 3px;
+		}
+		.vb-r8d__note {
+			margin: 26px 0 0;
+			font-size: 14.5px;
+			line-height: 1.65;
+			color: #56564B;
+			background: rgba(255, 252, 245, .55);
+			border-left: 2px solid #B4602F;
+			padding: 14px 18px;
+		}
+		@media (max-width: 960px) {
+			.vb-r8d__grid { grid-template-columns: 1fr; }
+			.vb-r8d__banner { aspect-ratio: 16 / 9; }
+		}
+		@media (max-width: 640px) {
+			.vb-r8d { padding: 64px 18px; }
+			.vb-r8d__tabs {
+				flex-wrap: nowrap;
+				overflow-x: auto;
+				-webkit-overflow-scrolling: touch;
+				padding-bottom: 16px;
+				scrollbar-width: none;
+			}
+			.vb-r8d__tabs::-webkit-scrollbar { display: none; }
+			.vb-r8d__tab { white-space: nowrap; }
+			.vb-r8d__card { padding: 22px 20px; }
+		}
+	</style>
+	<div class="vb-r8d__wrap">
+		<div class="vb-r8d__head vb-reveal">
+			<p class="vb-r8d__eyebrow">Номера и цены</p>
+			<h2 class="vb-r8d__title" id="vb-r8d-title">Двенадцать домиков <em>у воды</em> и в бору</h2>
+			<p class="vb-r8d__lead">Цены указаны за ночь для двух гостей в сезон май — октябрь. В каждую лоджу входят завтрак из фермерских продуктов, льдина с питьевой водой и комплект полотенец.</p>
+		</div>
+
+		<div class="vb-r8d__tabs" role="tablist" aria-label="Категории размещения">
+			<button class="vb-r8d__tab" id="vb-r8d-tab-1" role="tab" aria-selected="true" aria-controls="vb-r8d-panel-1" type="button">Лоджи у озера</button>
+			<button class="vb-r8d__tab" id="vb-r8d-tab-2" role="tab" aria-selected="false" aria-controls="vb-r8d-panel-2" tabindex="-1" type="button">Шатры в сосновом бору</button>
+			<button class="vb-r8d__tab" id="vb-r8d-tab-3" role="tab" aria-selected="false" aria-controls="vb-r8d-panel-3" tabindex="-1" type="button">Семейный домик</button>
+			<button class="vb-r8d__tab" id="vb-r8d-tab-4" role="tab" aria-selected="false" aria-controls="vb-r8d-panel-4" tabindex="-1" type="button">Баня на дровах</button>
+		</div>
+
+		<div class="vb-r8d__panel" id="vb-r8d-panel-1" role="tabpanel" aria-labelledby="vb-r8d-tab-1" tabindex="0">
+			<figure class="vb-r8d__banner">
+				<img src="https://static.tildacdn.pub/tild3531-6462-4065-b461-363064343432/photo-1454916286212-.jpg" alt="Лоджи у озера на рассвете" loading="lazy">
+				<figcaption>Четыре лоджи на 40 метров от берега, терраса с гамаком в каждой</figcaption>
+			</figure>
+			<div class="vb-r8d__grid">
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Лоджа «Тихая»</h3><span class="vb-r8d__area">28 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Печь-камин</li><li>Вид на сосны</li></ul>
+					<ul class="vb-r8d__equip"><li>Двуспальная кровать с льняным бельём</li><li>Чайная станция: травы, кофе, термос</li><li>Душ и санузел внутри</li><li>Терраса с двумя креслами</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 9 500 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Тихая»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Лоджа «Сосновая»</h3><span class="vb-r8d__area">32 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 + 1 гость</li><li>Печь-камин</li><li>Панорамное окно</li></ul>
+					<ul class="vb-r8d__equip"><li>Спальня и диван-кровать</li><li>Кухня: чайник, мини-холодильник</li><li>Камин на дровах (дрова — 600 ₽/сетка)</li><li>Гамак на террасе</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 11 000 ₽ <small>за ночь, 2–3 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Сосновая»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Лоджа «Мостки»</h3><span class="vb-r8d__area">34 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Выход к воде</li><li>Дровяная печь</li></ul>
+					<ul class="vb-r8d__equip"><li>Собственный мосток и лодка на бочках</li><li>Ванна у окна, биоразлагаемая косметика</li><li>Термос и чайная станция</li><li>Полотенца и халаты</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 12 500 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Мостки»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Лоджа «Рассвет»</h3><span class="vb-r8d__area">30 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Восток, вид на озеро</li><li>Печь-камин</li></ul>
+					<ul class="vb-r8d__equip"><li>Кровать у окна: рассвет над водой</li><li>Купель на террасе (холодная вода круглосуточно)</li><li>Чайная станция, льдина с водой</li><li>Парковка у лоджи</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 13 900 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Рассвет»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+			</div>
+		</div>
+
+		<div class="vb-r8d__panel" id="vb-r8d-panel-2" role="tabpanel" aria-labelledby="vb-r8d-tab-2" tabindex="0" hidden>
+			<figure class="vb-r8d__banner">
+				<img src="https://static.tildacdn.pub/tild6237-3031-4330-b064-336365313664/photo-1774886302070-.jpg" alt="Тентовые шатры глэмпинга в сосновом бору" loading="lazy">
+				<figcaption>Четыре шатра в 100 метрах от воды, между сосен — ни одного вырубленного дерева</figcaption>
+			</figure>
+			<div class="vb-r8d__grid">
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Шатёр «Бор»</h3><span class="vb-r8d__area">24 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Дровяная печь</li><li>Пол вагонкой</li></ul>
+					<ul class="vb-r8d__equip"><li>Брашированная кровать с пуховым одеялом</li><li>Печь-буржуйка, дрова включены</li><li>Туалет и душ — в отдельном домике, 15 м</li><li>Чайная станция и термос</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 7 500 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Шатёр «Бор»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Шатёр «Дюны»</h3><span class="vb-r8d__area">26 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Песчаный берег</li><li>Печь</li></ul>
+					<ul class="vb-r8d__equip"><li>Собственная тропа к воде через дюну</li><li>Кресла-качалки на террасе</li><li>Льдина с водой и полотенца</li><li>Угольки для мангала — включены</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 8 200 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Шатёр «Дюны»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Шатёр «Панорама»</h3><span class="vb-r8d__area">28 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Камин</li><li>Панорамное окно</li></ul>
+					<ul class="vb-r8d__equip"><li>Камин с широким стеклом, вид на закат</li><li>Ванна на террасе (сентябрь — октябрь с подогревом)</li><li>Чайная станция с травами</li><li>Халаты и полотенца</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 9 900 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Шатёр «Панорама»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Шатёр «Хвойный»</h3><span class="vb-r8d__area">30 м²</span></div>
+					<ul class="vb-r8d__meta"><li>2 + 2 гостя</li><li>Двуспальная + две койки</li><li>Печь</li></ul>
+					<ul class="vb-r8d__equip"><li>Семейный шатёр с антресолью для детей</li><li>Игровая полка, настенные игры</li><li>Санузел внутри, душ — в 15 м</li><li>Завтрак приносим к террасе</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 8 900 ₽ <small>за ночь, до 4 гостей · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Шатёр «Хвойный»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+			</div>
+		</div>
+
+		<div class="vb-r8d__panel" id="vb-r8d-panel-3" role="tabpanel" aria-labelledby="vb-r8d-tab-3" tabindex="0" hidden>
+			<figure class="vb-r8d__banner">
+				<img src="https://static.tildacdn.pub/tild6337-3430-4239-b966-323231396365/photo-1449158743715-.jpg" alt="Семейный деревянный домик в сосновом лесу" loading="lazy">
+				<figcaption>Три домика из клеёного бруса на опушке, с кухней и печью</figcaption>
+			</figure>
+			<div class="vb-r8d__grid">
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Домик «Озерный»</h3><span class="vb-r8d__area">45 м²</span></div>
+					<ul class="vb-r8d__meta"><li>4 гостя</li><li>Кухня</li><li>Печь-камин</li></ul>
+					<ul class="vb-r8d__equip"><li>Две спальни: 16 и 12 м²</li><li>Кухня с плитой, чайником и посудой</li><li>Санузел с душем, полотенца</li><li>Терраса с мангалом</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 16 500 ₽ <small>за ночь, 4 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Озерный»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Домик «Шишка»</h3><span class="vb-r8d__area">52 м²</span></div>
+					<ul class="vb-r8d__meta"><li>5 гостей</li><li>Две спальни</li><li>Печь</li></ul>
+					<ul class="vb-r8d__equip"><li>Спальни + гостиная с диваном-кроватью</li><li>Чайная станция и термос в каждой спальне</li><li>Детская кроватка — по запросу</li><li>Халаты для взрослых, полотенца для всех</li></ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 18 900 ₽ <small>за ночь, до 5 гостей · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Шишка»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Домик «Кедр»</h3><span class="vb-r8d__area">60 м²</span></div>
+					<ul class="vb-r8d__meta"><li>6 гостей</li><li>Три спальни</li><li>Камин</li></ul>
+					<ul class="vb-r8d__equip"><li>Три спальни, две ванные комнаты</li>
+						<li>Кухня с посудомойкой, чайная станция</li>
+						<li>Камин, дрова — 600 ₽ за сетку</li>
+						<li>Льдина с водой при заселении</li>
+					</ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 22 000 ₽ <small>за ночь, до 6 гостей · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Кедр»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Домик «Опушка»</h3><span class="vb-r8d__area">42 м²</span></div>
+					<ul class="vb-r8d__meta"><li>4 гостя</li><li>Доступная среда</li><li>Печь</li></ul>
+					<ul class="vb-r8d__equip"><li>Один уровень без порогов, широкие двери</li>
+						<li>Душ со скамьёй, поручни</li>
+						<li>Кухня, чайная станция, термос</li>
+						<li>Пандус к террасе, парковка у входа</li>
+					</ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">от 15 900 ₽ <small>за ночь, 4 гостя · завтрак включён</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Опушка»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+			</div>
+		</div>
+
+		<div class="vb-r8d__panel" id="vb-r8d-panel-4" role="tabpanel" aria-labelledby="vb-r8d-tab-4" tabindex="0" hidden>
+			<figure class="vb-r8d__banner">
+				<img src="https://static.tildacdn.pub/tild3737-3032-4962-b738-323739666134/photo-1701815017903-.jpg" alt="Баня на дровах у берега озера" loading="lazy">
+				<figcaption>Баня на дровах у самой воды, парение с вениками из нашего бора</figcaption>
+			</figure>
+			<div class="vb-r8d__grid">
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Баня «У воды»</h3><span class="vb-r8d__area">4 гостя</span></div>
+					<ul class="vb-r8d__meta"><li>2 часа</li><li>Парная на 4</li><li>Мостки</li></ul>
+					<ul class="vb-r8d__equip"><li>Печь Komfort, пар на камнях</li>
+						<li>Комната отдыха с чайным столом</li>
+						<li>Выход к озеру с мостков</li>
+						<li>Веник из берёзы — 400 ₽</li>
+					</ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">4 000 ₽ <small>2 часа, до 4 гостей · полотенца включены</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Баня «У воды»"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Баня с купелью</h3><span class="vb-r8d__area">4 гостя</span></div>
+					<ul class="vb-r8d__meta"><li>2 часа</li><li>Купель 300 л</li><li>Веники включены</li></ul>
+					<ul class="vb-r8d__equip"><li>Дубовая купель на террасе</li>
+						<li>Два веника в комплекте</li>
+						<li>Чай с чабрецом после парения</li>
+						<li>Полотенца и халаты</li>
+					</ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">5 500 ₽ <small>2 часа, до 4 гостей · полотенца включены</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Баня с купелью"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Баня + чайная</h3><span class="vb-r8d__area">6 гостей</span></div>
+					<ul class="vb-r8d__meta"><li>3 часа</li><li>Большая парная</li><li>Чайная станция</li></ul>
+					<ul class="vb-r8d__equip"><li>Парная на 6 человек</li>
+						<li>Травяной чай, морс и печенье</li>
+						<li>Сеновал для отдыха над парной</li>
+						<li>Мангал на дровах</li>
+					</ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">7 000 ₽ <small>3 часа, до 6 гостей · полотенца включены</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Баня + чайная"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+				<article class="vb-r8d__card">
+					<div class="vb-r8d__card-top"><h3>Утреннее парение</h3><span class="vb-r8d__area">2 гостя</span></div>
+					<ul class="vb-r8d__meta"><li>1,5 часа</li><li>7:30–9:00</li><li>С парением</li></ul>
+					<ul class="vb-r8d__equip"><li>Парение с банщиком, два веника</li>
+						<li>Купель и обливание из озера</li>
+						<li>Кофе и сырники после</li>
+						<li>Только по будням, по одной паре</li>
+					</ul>
+					<div class="vb-r8d__card-foot">
+						<p class="vb-r8d__price">3 500 ₽ <small>1,5 часа, 2 гостя · по записи</small></p>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Утреннее парение"><span class="t-btnflex__text">Выбрать</span></a>
+					</div>
+				</article>
+			</div>
+		</div>
+
+		<p class="vb-r8d__note">В стоимость проживания входит завтрак, льдина с питьевой водой при заселении, комплект полотенец, парковка и пользование пирсом. Заезд с 15:00, выезд до 12:00. Дети до 5 лет — бесплатно.</p>
+	</div>
+	<script>
+		(function () {
+			var root = document.getElementById('vb-r8d-rooms');
+			var tabs = Array.prototype.slice.call(root.querySelectorAll('[role="tab"]'));
+
+			function selectTab(tab, focus) {
+				tabs.forEach(function (t) {
+					var selected = t === tab;
+					t.setAttribute('aria-selected', selected ? 'true' : 'false');
+					t.tabIndex = selected ? 0 : -1;
+					document.getElementById(t.getAttribute('aria-controls')).hidden = !selected;
+				});
+				if (focus) { tab.focus(); }
+				tab.scrollIntoView({ block: 'nearest', inline: 'nearest', behavior: 'smooth' });
+			}
+			tabs.forEach(function (tab, i) {
+				tab.addEventListener('click', function () { selectTab(tab, false); });
+				tab.addEventListener('keydown', function (e) {
+					var next = null;
+					if (e.key === 'ArrowRight') { next = tabs[(i + 1) % tabs.length]; }
+					else if (e.key === 'ArrowLeft') { next = tabs[(i - 1 + tabs.length) % tabs.length]; }
+					else if (e.key === 'Home') { next = tabs[0]; }
+					else if (e.key === 'End') { next = tabs[tabs.length - 1]; }
+					if (next) { e.preventDefault(); selectTab(next, true); }
+				});
+			});
+
+			root.querySelectorAll('[data-room]').forEach(function (btn) {
+				btn.addEventListener('click', function (e) {
+					var target = document.querySelector(btn.getAttribute('href'));
+					if (!target) { return; }
+					e.preventDefault();
+					var select = document.getElementById('vb-f6c-room');
+					if (select) {
+						var wanted = btn.getAttribute('data-room');
+						Array.prototype.some.call(select.options, function (opt) {
+							if (opt.text === wanted || opt.value === wanted) { select.value = opt.value; return true; }
+							return false;
+						});
+					}
+					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+				});
+			});
+		})();
+	</script>
+</section>
+
+<section class="vb-t5w" id="vb-t5w-activities" aria-labelledby="vb-t5w-title" data-section-name="Активности и услуги" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-t5w, .vb-t5w * { box-sizing: border-box; }
+		.vb-t5w {
+			background: #F1E9DC;
+			color: #2A2A24;
+			font-family: var(--t-text-font);
+			padding: clamp(72px, 10vw, 130px) 24px;
+		}
+		.vb-t5w__wrap { max-width: 1280px; margin: 0 auto; }
+		.vb-t5w__head { max-width: 60ch; margin-bottom: 42px; }
+		.vb-t5w__eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: #7A6A52; margin: 0 0 18px; }
+		.vb-t5w__title {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: clamp(30px, 4vw, 52px);
+			line-height: 1.12;
+			margin: 0 0 16px;
+			text-wrap: balance;
+		}
+		.vb-t5w__title em { font-style: italic; color: #3C5A3E; }
+		.vb-t5w__lead { font-size: 16.5px; line-height: 1.7; color: #56564B; margin: 0; }
+		.vb-t5w__grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 24px;
+		}
+		.vb-t5w__card {
+			background: #F7F1E6;
+			border-radius: 4px;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			transition: transform .5s cubic-bezier(.2,.7,.2,1), box-shadow .5s ease;
+		}
+		.vb-t5w__card:hover { transform: translateY(-8px); box-shadow: 0 26px 50px -30px rgba(42, 42, 36, .6); }
+		.vb-t5w__media { position: relative; aspect-ratio: 4 / 3; overflow: hidden; }
+		.vb-t5w__media img:first-child {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform 1.1s cubic-bezier(.2,.7,.2,1);
+		}
+		.vb-t5w__card:hover .vb-t5w__media img:first-child { transform: scale(1.07); }
+		.vb-t5w__icon {
+			position: absolute;
+			left: 18px;
+			bottom: 18px;
+			width: 44px;
+			height: 44px;
+			border-radius: 50%;
+			background: rgba(245, 239, 227, .94);
+			display: grid;
+			place-items: center;
+		}
+		.vb-t5w__icon img { width: 20px; height: 20px; }
+		.vb-t5w__body { padding: 24px 24px 26px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+		.vb-t5w__body h3 { font-family: var(--t-headline-font); font-weight: 400; font-size: 22px; margin: 0; }
+		.vb-t5w__body p { margin: 0; font-size: 14.8px; line-height: 1.65; color: #56564B; }
+		.vb-t5w__facts {
+			margin: auto 0 0;
+			padding-top: 16px;
+			border-top: 1px solid rgba(42, 42, 36, .14);
+			display: flex;
+			align-items: baseline;
+			justify-content: space-between;
+			gap: 12px;
+			flex-wrap: wrap;
+		}
+		.vb-t5w__price { font-family: var(--t-headline-font); font-size: 19px; color: #8A4A20; }
+		.vb-t5w__dur { font-size: 13px; color: #7A6A52; letter-spacing: .04em; }
+		@media (max-width: 1040px) { .vb-t5w__grid { grid-template-columns: repeat(2, 1fr); } }
+		@media (max-width: 640px) {
+			.vb-t5w { padding: 64px 18px; }
+			.vb-t5w__grid { grid-template-columns: 1fr; }
+		}
+	</style>
+	<div class="vb-t5w__wrap">
+		<div class="vb-t5w__head vb-reveal">
+			<p class="vb-t5w__eyebrow">Активности и услуги</p>
+			<h2 class="vb-t5w__title" id="vb-t5w-title">Чем заняться <em>с утра до огня</em></h2>
+			<p class="vb-t5w__lead">Всё можно оплатить на ресепшене или добавить к брони заранее. Снасти, жилеты и инструктаж включены.</p>
+		</div>
+		<div class="vb-t5w__grid">
+			<article class="vb-t5w__card vb-reveal">
+				<div class="vb-t5w__media">
+					<img src="https://static.tildacdn.pub/tild3736-3232-4431-b134-623035336464/photo-1541742425281-.jpg" alt="Рыбалка на озере Сосновое на рассвете" loading="lazy">
+					<span class="vb-t5w__icon"><img src="https://static.tildacdn.pub/lib/icons/tilda/fishing_water_fishhook.svg" alt="" aria-hidden="true"></span>
+				</div>
+				<div class="vb-t5w__body">
+					<h3>Рыбалка на озере</h3>
+					<p>Окунь, щука, лещ. Двухместная лодка с веслами и электромотором, снасти и ящик со льдом — от ресепшена.</p>
+					<div class="vb-t5w__facts"><span class="vb-t5w__price">2 500 ₽</span><span class="vb-t5w__dur">3 часа, лодка включена</span></div>
+				</div>
+			</article>
+			<article class="vb-t5w__card vb-reveal">
+				<div class="vb-t5w__media">
+					<img src="https://static.tildacdn.pub/tild3337-3839-4436-a162-633231363166/photo-1516739063901-.jpg" alt="SUP-борд на спокойной воде озера" loading="lazy">
+					<span class="vb-t5w__icon"><img src="https://static.tildacdn.pub/lib/icons/tilda/kayaking_canoe.svg" alt="" aria-hidden="true"></span>
+				</div>
+				<div class="vb-t5w__body">
+					<h3>SUP и лодка</h3>
+					<p>Надувные борды с веслом и жилетом, каяк на двоих. Инструктаж для новичков — 15 минут, включён в цену.</p>
+					<div class="vb-t5w__facts"><span class="vb-t5w__price">от 1 500 ₽</span><span class="vb-t5w__dur">1–2 часа</span></div>
+				</div>
+			</article>
+			<article class="vb-t5w__card vb-reveal">
+				<div class="vb-t5w__media">
+					<img src="https://static.tildacdn.pub/tild6337-3961-4037-b133-626364613730/photo-1631289445323-.jpg" alt="Пеший маршрут по сосновому бору" loading="lazy">
+					<span class="vb-t5w__icon"><img src="https://static.tildacdn.pub/lib/icons/tilda/mountain.svg" alt="" aria-hidden="true"></span>
+				</div>
+				<div class="vb-t5w__body">
+					<h3>Пешие маршруты по бору</h3>
+					<p>Три тропы: 2 км к болоту с брусникой, 4 км на смотровую гору, 6 км вокруг озера. Метки и карты — на ресепшене.</p>
+					<div class="vb-t5w__facts"><span class="vb-t5w__price">1 800 ₽</span><span class="vb-t5w__dur">2–3 часа, с гидом</span></div>
+				</div>
+			</article>
+			<article class="vb-t5w__card vb-reveal">
+				<div class="vb-t5w__media">
+					<img src="https://static.tildacdn.pub/tild3737-3032-4962-b738-323739666134/photo-1701815017903-.jpg" alt="Баня на дровах с купелью у озера" loading="lazy">
+					<span class="vb-t5w__icon"><img src="https://static.tildacdn.pub/lib/icons/tilda/fire_bonfire.svg" alt="" aria-hidden="true"></span>
+				</div>
+				<div class="vb-t5w__body">
+					<h3>Баня с купелью</h3>
+					<p>Дровяная баня у воды: парная, дубовая купель, травяной чай с чабрецом. Веники — из берёзы и веника на выбор.</p>
+					<div class="vb-t5w__facts"><span class="vb-t5w__price">от 4 000 ₽</span><span class="vb-t5w__dur">2 часа, до 4 гостей</span></div>
+				</div>
+			</article>
+			<article class="vb-t5w__card vb-reveal">
+				<div class="vb-t5w__media">
+					<img src="https://static.tildacdn.pub/tild6138-6634-4962-b561-323537326635/photo-1652169892293-.jpg" alt="Пикник-корзина на лугу у озера" loading="lazy">
+					<span class="vb-t5w__icon"><img src="https://static.tildacdn.pub/lib/icons/tilda/bag_luggage_case.svg" alt="" aria-hidden="true"></span>
+				</div>
+				<div class="vb-t5w__body">
+					<h3>Пикник-корзина</h3>
+					<p>Сыр и колбаса из Тулы, хлеб на закваске, соленья с огорода, бутылка лимонада. Плед и складной столик — в комплекте.</p>
+					<div class="vb-t5w__facts"><span class="vb-t5w__price">3 200 ₽</span><span class="vb-t5w__dur">корзина на 2 персоны</span></div>
+				</div>
+			</article>
+			<article class="vb-t5w__card vb-reveal">
+				<div class="vb-t5w__media">
+					<img src="https://static.tildacdn.pub/tild6661-3161-4064-b461-373534366430/photo-1770556610091-.jpg" alt="Йога на деревянном пирсе у озера" loading="lazy">
+					<span class="vb-t5w__icon"><img src="https://static.tildacdn.pub/lib/icons/tilda/man_person.svg" alt="" aria-hidden="true"></span>
+				</div>
+				<div class="vb-t5w__body">
+					<h3>Йога на пирсе</h3>
+					<p>Утренняя практика на деревянном пирсе: асана, дыхание, медитация звука воды. Коврики и пледы — наши.</p>
+					<div class="vb-t5w__facts"><span class="vb-t5w__price">1 200 ₽</span><span class="vb-t5w__dur">60 минут, с 7:30</span></div>
+				</div>
+			</article>
+		</div>
+	</div>
+</section>
+
+<section class="vb-y2n" id="vb-y2n-reviews" aria-labelledby="vb-y2n-title" data-section-name="Отзывы гостей" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-y2n, .vb-y2n * { box-sizing: border-box; }
+		.vb-y2n {
+			background: #2F4634;
+			color: #F1E9DC;
+			font-family: var(--t-text-font);
+			padding: clamp(72px, 10vw, 130px) 0;
+			overflow: hidden;
+		}
+		.vb-y2n__head {
+			max-width: 1280px;
+			margin: 0 auto 40px;
+			padding: 0 24px;
+			display: flex;
+			align-items: flex-end;
+			justify-content: space-between;
+			gap: 24px;
+			flex-wrap: wrap;
+		}
+		.vb-y2n__eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: rgba(241, 233, 220, .62); margin: 0 0 16px; }
+		.vb-y2n__title {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: clamp(30px, 4vw, 52px);
+			line-height: 1.12;
+			margin: 0;
+			text-wrap: balance;
+		}
+		.vb-y2n__title em { font-style: italic; color: #E9C79A; }
+		.vb-y2n__nav { display: flex; gap: 10px; }
+		.vb-y2n__arrow {
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			border: 1px solid rgba(241, 233, 220, .4);
+			background: transparent;
+			color: #F1E9DC;
+			cursor: pointer;
+			font-size: 18px;
+			line-height: 1;
+			transition: background-color .35s ease, transform .35s ease;
+		}
+		.vb-y2n__arrow:hover { background: rgba(241, 233, 220, .14); transform: translateY(-2px); }
+		.vb-y2n__track {
+			display: flex;
+			gap: 22px;
+			overflow-x: auto;
+			scroll-snap-type: x mandatory;
+			padding: 6px 24px 26px;
+			max-width: 1330px;
+			margin: 0 auto;
+			scrollbar-width: none;
+			-webkit-overflow-scrolling: touch;
+		}
+		.vb-y2n__track::-webkit-scrollbar { display: none; }
+		.vb-y2n__card {
+			flex: 0 0 min(400px, 82vw);
+			scroll-snap-align: start;
+			background: rgba(241, 233, 220, .07);
+			border: 1px solid rgba(241, 233, 220, .16);
+			border-radius: 4px;
+			padding: 28px 26px 26px;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+			transition: transform .5s cubic-bezier(.2,.7,.2,1), background-color .5s ease;
+		}
+		.vb-y2n__card:hover { transform: translateY(-6px); background: rgba(241, 233, 220, .12); }
+		.vb-y2n__stars { display: flex; gap: 4px; color: #E9C79A; font-size: 15px; letter-spacing: 2px; }
+		.vb-y2n__text { margin: 0; font-size: 15.4px; line-height: 1.72; color: rgba(241, 233, 220, .92); }
+		.vb-y2n__foot {
+			margin-top: auto;
+			padding-top: 18px;
+			border-top: 1px solid rgba(241, 233, 220, .16);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 12px;
+		}
+		.vb-y2n__who b { display: block; font-family: var(--t-headline-font); font-weight: 400; font-size: 17px; }
+		.vb-y2n__who span { font-size: 12.5px; color: rgba(241, 233, 220, .6); }
+		.vb-y2n__src {
+			font-size: 12px;
+			letter-spacing: .08em;
+			text-transform: uppercase;
+			color: rgba(241, 233, 220, .72);
+			border: 1px solid rgba(241, 233, 220, .28);
+			border-radius: 100px;
+			padding: 6px 12px;
+			white-space: nowrap;
+		}
+		@media (max-width: 640px) {
+			.vb-y2n__track { padding: 6px 18px 26px; }
+			.vb-y2n__head { padding: 0 18px; }
+		}
+	</style>
+	<div class="vb-y2n__head vb-reveal">
+		<div>
+			<p class="vb-y2n__eyebrow">Отзывы гостей</p>
+			<h2 class="vb-y2n__title" id="vb-y2n-title">4,9 из 5 — <em>по 214 отзывам</em> на картах</h2>
+		</div>
+		<div class="vb-y2n__nav">
+			<button class="vb-y2n__arrow" type="button" data-dir="-1" aria-label="Предыдущий отзыв">&#8592;</button>
+			<button class="vb-y2n__arrow" type="button" data-dir="1" aria-label="Следующий отзыв">&#8594;</button>
+		</div>
+	</div>
+	<div class="vb-y2n__track" tabindex="0" aria-label="Галерея отзывов гостей">
+		<article class="vb-y2n__card">
+			<p class="vb-y2n__stars" aria-label="Оценка 5 из 5">★★★★★</p>
+			<p class="vb-y2n__text">Приехали в июле на две ночи, уезжать не хотелось. Лоджа «Мостки» — вода в сорока шагах, утром туман и никакого звука кроме птиц. Завтрак приносят к террасе: сырники, молоко, ягоды.</p>
+			<div class="vb-y2n__foot">
+				<div class="vb-y2n__who"><b>Марина К.</b><span>Июль 2024 · Лоджа «Мостки»</span></div>
+				<span class="vb-y2n__src">Яндекс Карты</span>
+			</div>
+		</article>
+		<article class="vb-y2n__card">
+			<p class="vb-y2n__stars" aria-label="Оценка 5 из 5">★★★★★</p>
+			<p class="vb-y2n__text">Брали шатёр «Панорама» в сентябре — с печкой тепло даже ночью, в 4 градуса. Камин, плед, чай с чабрецом. Осенью здесь лучше лета: сосны рыжие, озеро как зеркало.</p>
+			<div class="vb-y2n__foot">
+				<div class="vb-y2n__who"><b>Артём и Юля</b><span>Сентябрь 2024 · Шатёр «Панорама»</span></div>
+				<span class="vb-y2n__src">Авито Путешествия</span>
+			</div>
+		</article>
+		<article class="vb-y2n__card">
+			<p class="vb-y2n__stars" aria-label="Оценка 5 из 5">★★★★★</p>
+			<p class="vb-y2n__text">Ездили вчетвером с детьми в домике «Шишка». Дети первый раз спали без экранов и не заметили. Отдельное спасение — баня после дождя и купель на террасе. Вернёмся зимой с печкой.</p>
+			<div class="vb-y2n__foot">
+				<div class="vb-y2n__who"><b>Семья Дороховых</b><span>Август 2024 · Домик «Шишка»</span></div>
+				<span class="vb-y2n__src">Яндекс Карты</span>
+			</div>
+		</article>
+		<article class="vb-y2n__card">
+			<p class="vb-y2n__stars" aria-label="Оценка 5 из 5">★★★★★</p>
+			<p class="vb-y2n__text">Взяли йогу на пирсе в 7:30 и рыбалку после — два разных ощущения одного озера. Администратор Настя подобрала снасти под наше утро и рассказала, где клюёт окунь. Мелочи, а держатся.</p>
+			<div class="vb-y2n__foot">
+				<div class="vb-y2n__who"><b>Ольга В.</b><span>Июнь 2024 · Лоджа «Тихая»</span></div>
+				<span class="vb-y2n__src">2ГИС</span>
+			</div>
+		</article>
+		<article class="vb-y2n__card">
+			<p class="vb-y2n__stars" aria-label="Оценка 5 из 5">★★★★★</p>
+			<p class="vb-y2n__text">Всё честно: Wi-Fi только в ресепшене, телевизоров нет, вечером действительно тихо. В первые два часа было тревожно, потом отпустило. Это лучшее, что случалось с нами за год.</p>
+			<div class="vb-y2n__foot">
+				<div class="vb-y2n__who"><b>Дмитрий П.</b><span>Май 2024 · Шатёр «Бор»</span></div>
+				<span class="vb-y2n__src">Авито Путешествия</span>
+			</div>
+		</article>
+	</div>
+	<script>
+		(function () {
+			var root = document.getElementById('vb-y2n-reviews');
+			var track = root.querySelector('.vb-y2n__track');
+			root.querySelectorAll('.vb-y2n__arrow').forEach(function (btn) {
+				btn.addEventListener('click', function () {
+					var dir = parseInt(btn.getAttribute('data-dir'), 10);
+					var card = track.querySelector('.vb-y2n__card');
+					var step = card ? card.getBoundingClientRect().width + 22 : 380;
+					track.scrollBy({ left: dir * step, behavior: 'smooth' });
+				});
+			});
+		})();
+	</script>
+</section>
+
+<section class="vb-f6c" id="vb-f6c-booking" aria-labelledby="vb-f6c-title" data-section-name="Бронирование" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-f6c, .vb-f6c * { box-sizing: border-box; }
+		.vb-f6c, .vb-f6c input, .vb-f6c select, .vb-f6c textarea { font: inherit; }
+		.vb-f6c {
+			background: #EDE4D4;
+			color: #2A2A24;
+			font-family: var(--t-text-font);
+			padding: clamp(72px, 10vw, 130px) 24px;
+		}
+		.vb-f6c__wrap {
+			max-width: 1180px;
+			margin: 0 auto;
+			display: grid;
+			grid-template-columns: .9fr 1.1fr;
+			gap: clamp(32px, 5vw, 70px);
+			align-items: start;
+		}
+		.vb-f6c__eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: #7A6A52; margin: 0 0 18px; }
+		.vb-f6c__title {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: clamp(30px, 4vw, 50px);
+			line-height: 1.12;
+			margin: 0 0 18px;
+			text-wrap: balance;
+		}
+		.vb-f6c__title em { font-style: italic; color: #3C5A3E; }
+		.vb-f6c__lead { font-size: 16px; line-height: 1.7; color: #56564B; margin: 0 0 26px; }
+		.vb-f6c__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; }
+		.vb-f6c__list li {
+			display: flex;
+			gap: 12px;
+			align-items: flex-start;
+			font-size: 14.6px;
+			line-height: 1.6;
+			color: #4A4A40;
+		}
+		.vb-f6c__list img { width: 18px; height: 18px; margin-top: 3px; flex: none; opacity: .75; }
+		.vb-f6c__card {
+			background: #F7F1E6;
+			border-radius: 4px;
+			padding: clamp(24px, 3vw, 40px);
+			box-shadow: 0 24px 60px -40px rgba(42, 42, 36, .55);
+		}
+		.vb-f6c__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+		.vb-input-group { display: flex; flex-direction: column; gap: 7px; }
+		.vb-f6c__card .vb-input-group label {
+			font-size: 12.5px;
+			letter-spacing: .1em;
+			text-transform: uppercase;
+			color: #6B6A5F;
+		}
+		.vb-f6c__card input[type="text"],
+		.vb-f6c__card input[type="tel"],
+		.vb-f6c__card input[type="date"],
+		.vb-f6c__card input[type="number"],
+		.vb-f6c__card select {
+			width: 100%;
+			min-height: 52px;
+			padding: 12px 14px;
+			border: 1px solid rgba(42, 42, 36, .24);
+			border-radius: 3px;
+			background: #FFFDF8;
+			color: #2A2A24;
+			font-family: var(--t-text-font);
+			font-size: 15.5px;
+			transition: border-color .3s ease, box-shadow .3s ease;
+		}
+		.vb-f6c__card input:focus,
+		.vb-f6c__card select:focus {
+			outline: none;
+			border-color: #3C5A3E;
+			box-shadow: 0 0 0 3px rgba(60, 90, 62, .18);
+		}
+		.vb-f6c__card input:focus-visible,
+		.vb-f6c__card select:focus-visible { outline: 2px solid #8A4A20; outline-offset: 2px; }
+		.t-input-error { font-size: 12.5px; color: #A03427; min-height: 0; }
+		.vb-f6c__check {
+			display: flex;
+			gap: 12px;
+			align-items: flex-start;
+			margin: 22px 0 26px;
+			font-size: 13.6px;
+			line-height: 1.6;
+			color: #56564B;
+		}
+		.vb-f6c__check input {
+			width: 20px;
+			height: 20px;
+			margin: 2px 0 0;
+			flex: none;
+			accent-color: #3C5A3E;
+		}
+		.vb-f6c__check a { color: #8A4A20; }
+		.vb-f6c__submit { width: 100%; justify-content: center; }
+		.vb-f6c__fine { margin: 14px 0 0; font-size: 12.8px; color: #7A6A52; text-align: center; }
+		.vb-f6c__success {
+			display: none;
+			text-align: center;
+			padding: 20px 8px;
+		}
+		.vb-f6c__success.is-visible { display: block; }
+		.vb-f6c__success-mark {
+			width: 56px;
+			height: 56px;
+			border-radius: 50%;
+			background: rgba(60, 90, 62, .12);
+			display: grid;
+			place-items: center;
+			margin: 0 auto 18px;
+			font-size: 24px;
+			color: #3C5A3E;
+		}
+		.vb-f6c__success h3 {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: 25px;
+			margin: 0 0 10px;
+		}
+		.vb-f6c__success p { margin: 0; font-size: 15.5px; line-height: 1.65; color: #56564B; }
+		.vb-f6c .js-errorbox-all { display: none; margin-bottom: 16px; padding: 12px 16px; background: rgba(160, 52, 39, .08); border-radius: 3px; color: #A03427; font-size: 13.6px; }
+		.vb-f6c .js-errorbox-all.is-visible { display: block; }
+		@media (max-width: 960px) {
+			.vb-f6c__wrap { grid-template-columns: 1fr; }
+		}
+		@media (max-width: 640px) {
+			.vb-f6c { padding: 64px 18px; }
+			.vb-f6c__grid { grid-template-columns: 1fr; }
+		}
+	</style>
+	<div class="vb-f6c__wrap">
+		<div class="vb-reveal">
+			<p class="vb-f6c__eyebrow">Бронирование</p>
+			<h2 class="vb-f6c__title" id="vb-f6c-title">Забронировать <em>даты</em></h2>
+			<p class="vb-f6c__lead">Оставьте заявку — проверим свободные лоджи и перезвоним. Предоплата 30%, отмена без штрафа за 5 дней до заезда.</p>
+			<ul class="vb-f6c__list">
+				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/calendar_date_schedule.svg" alt="" aria-hidden="true">Заезд с 15:00, выезд до 12:00. Ранний заезд — если лоджа свободна.</li>
+				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/phone_contact_call_ring.svg" alt="" aria-hidden="true">Ответим в течение часа с 8:00 до 22:00, в ночное время — утром.</li>
+				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/tree_trees.svg" alt="" aria-hidden="true">Со своей едой — пожалуйста: в лоджах холодильник и мангал.</li>
+				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/watch_clock_time.svg" alt="" aria-hidden="true">Сезон май — октябрь. Зимние даты с печкой открываются в сентябре.</li>
+			</ul>
+		</div>
+
+		<div class="vb-f6c__card vb-reveal">
+			<form id="vb-f6c-form" name="vb-f6c-form" class="t-form js-form-proccess"
+				role="form" action="" method="POST"
+				data-vibeblock-form="true"
+				data-inputbox=".vb-input-group"
+				data-formactiontype="2"
+				data-error-popup="y"
+				novalidate>
+				<div class="js-successbox t-form__successbox" style="display: none">
+					<p><strong>Мы свяжемся с вами для подтверждения брони в течение часа.</strong></p>
+				</div>
+
+				<div class="js-errorbox-all" id="vb-f6c-errorbox">
+					<div class="js-rule-error-all"></div>
+				</div>
+
+				<div class="vb-f6c__grid">
+					<div class="vb-input-group">
+						<label for="vb-f6c-name">Имя</label>
+						<input type="text" id="vb-f6c-name" name="Имя" autocomplete="name" class="js-tilda-rule" data-tilda-req="1" data-tilda-rule="name" placeholder="Как к вам обращаться">
+						<div class="t-input-error"></div>
+					</div>
+					<div class="vb-input-group">
+						<label for="vb-f6c-phone">Телефон</label>
+						<input type="tel" id="vb-f6c-phone" name="Телефон" autocomplete="tel" class="js-tilda-rule js-tilda-mask" data-tilda-req="1" data-tilda-rule="phone" data-tilda-mask="+7 (999) 999-99-99" placeholder="+7 (___) ___-__-__">
+						<div class="t-input-error"></div>
+					</div>
+					<div class="vb-input-group">
+						<label for="vb-f6c-in">Дата заезда</label>
+						<input type="date" id="vb-f6c-in" name="Заезд" class="js-tilda-rule" data-tilda-req="1">
+						<div class="t-input-error"></div>
+					</div>
+					<div class="vb-input-group">
+						<label for="vb-f6c-out">Дата выезда</label>
+						<input type="date" id="vb-f6c-out" name="Выезд" class="js-tilda-rule" data-tilda-req="1">
+						<div class="t-input-error"></div>
+					</div>
+					<div class="vb-input-group">
+						<label for="vb-f6c-room">Номер</label>
+						<select id="vb-f6c-room" name="Номер" class="js-tilda-rule" data-tilda-req="1">
+							<option value="">Выберите номер</option>
+							<optgroup label="Лоджи у озера">
+								<option>Лоджа «Тихая»</option>
+								<option>Лоджа «Сосновая»</option>
+								<option>Лоджа «Мостки»</option>
+								<option>Лоджа «Рассвет»</option>
+							</optgroup>
+							<optgroup label="Шатры в сосновом бору">
+								<option>Шатёр «Бор»</option>
+								<option>Шатёр «Дюны»</option>
+								<option>Шатёр «Панорама»</option>
+								<option>Шатёр «Хвойный»</option>
+							</optgroup>
+							<optgroup label="Семейные домики">
+								<option>Домик «Озерный»</option>
+								<option>Домик «Шишка»</option>
+								<option>Домик «Кедр»</option>
+								<option>Домик «Опушка»</option>
+							</optgroup>
+							<optgroup label="Баня на дровах">
+								<option>Баня «У воды»</option>
+								<option>Баня с купелью</option>
+								<option>Баня + чайная</option>
+								<option>Утреннее парение</option>
+							</optgroup>
+						</select>
+						<div class="t-input-error"></div>
+					</div>
+					<div class="vb-input-group">
+						<label for="vb-f6c-guests">Гостей</label>
+						<input type="number" id="vb-f6c-guests" name="Гостей" min="1" max="6" value="2" class="js-tilda-rule" data-tilda-req="1" data-tilda-rule="number">
+						<div class="t-input-error"></div>
+					</div>
+				</div>
+
+				<label class="vb-f6c__check">
+					<input type="checkbox" name="Согласие" value="да" class="js-tilda-rule" data-tilda-req="1">
+					<span>Согласен на обработку персональных данных и получение ответа по заявке. <a href="#vb-h9z-contacts" data-scroll>Политика конфиденциальности</a></span>
+				</label>
+
+				<button type="submit" class="t-submit t-btnflex t-btnflex_md vb-f6c__submit">
+					<span class="t-btnflex__text">Забронировать</span>
+				</button>
+				<p class="vb-f6c__fine">Предоплата не списывается сейчас — сначала подтвердим даты.</p>
+			</form>
+
+			<div class="vb-f6c__success" id="vb-f6c-thanks" role="status" aria-live="polite">
+				<div class="vb-f6c__success-mark" aria-hidden="true">✓</div>
+				<h3>Заявка отправлена</h3>
+				<p>Мы свяжемся с вами для подтверждения брони в течение часа.</p>
+			</div>
+		</div>
+	</div>
+	<script>
+		(function () {
+			var root = document.getElementById('vb-f6c-booking');
+			var form = document.getElementById('vb-f6c-form');
+			var thanks = document.getElementById('vb-f6c-thanks');
+			var submitButton = form.querySelector('[type="submit"]');
+
+			var inField = document.getElementById('vb-f6c-in');
+			var outField = document.getElementById('vb-f6c-out');
+			var today = new Date().toISOString().split('T')[0];
+			inField.min = today;
+			outField.min = today;
+			inField.addEventListener('change', function () {
+				if (inField.value) { outField.min = inField.value; }
+				if (outField.value && outField.value <= inField.value) { outField.value = ''; }
+			});
+
+			form.addEventListener('submit', function (event) {
+				event.preventDefault();
+				if (window.tildaForm && window.tildaForm.hideErrors) {
+					window.tildaForm.hideErrors(form);
+					var errors = window.tildaForm.validate(form);
+					var hasErrors = window.tildaForm.showErrors(form, errors);
+					if (hasErrors) { return; }
+				}
+				form.style.display = 'none';
+				thanks.classList.add('is-visible');
+				thanks.scrollIntoView({ block: 'center', behavior: 'smooth' });
+			});
+
+			if (window.t_forms__initBtnClick) {
+				submitButton.addEventListener('click', function () {
+					window.t_forms__initBtnClick({ target: submitButton, srcElement: submitButton, preventDefault: function () {} });
+				});
+			}
+
+			root.querySelectorAll('[data-scroll]').forEach(function (a) {
+				a.addEventListener('click', function (e) {
+					var target = document.querySelector(a.getAttribute('href'));
+					if (!target) { return; }
+					e.preventDefault();
+					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+				});
+			});
+		})();
+	</script>
+</section>
+
+<section class="vb-h9z" id="vb-h9z-contacts" aria-labelledby="vb-h9z-title" data-section-name="Как добраться и контакты" data-vibeblock-unique-section="yes">
+	<style>
+		.vb-h9z, .vb-h9z * { box-sizing: border-box; }
+		.vb-h9z {
+			background: #F1E9DC;
+			color: #2A2A24;
+			font-family: var(--t-text-font);
+			padding: clamp(72px, 10vw, 130px) 24px 0;
+		}
+		.vb-h9z__wrap { max-width: 1280px; margin: 0 auto; }
+		.vb-h9z__head { max-width: 60ch; margin-bottom: 42px; }
+		.vb-h9z__eyebrow { font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: #7A6A52; margin: 0 0 18px; }
+		.vb-h9z__title {
+			font-family: var(--t-headline-font);
+			font-weight: 400;
+			font-size: clamp(30px, 4vw, 52px);
+			line-height: 1.12;
+			margin: 0 0 16px;
+			text-wrap: balance;
+		}
+		.vb-h9z__title em { font-style: italic; color: #3C5A3E; }
+		.vb-h9z__lead { font-size: 16.5px; line-height: 1.7; color: #56564B; margin: 0; }
+		.vb-h9z__grid {
+			display: grid;
+			grid-template-columns: 1fr 1.15fr;
+			gap: clamp(28px, 4vw, 60px);
+			align-items: start;
+		}
+		.vb-h9z__route {
+			background: #F7F1E6;
+			border-radius: 4px;
+			padding: 30px 28px;
+			margin-bottom: 26px;
+		}
+		.vb-h9z__route h3 { font-family: var(--t-headline-font); font-weight: 400; font-size: 22px; margin: 0 0 14px; }
+		.vb-h9z__route p { margin: 0 0 14px; font-size: 15px; line-height: 1.7; color: #4A4A40; }
+		.vb-h9z__route p:last-child { margin-bottom: 0; }
+		.vb-h9z__badge {
+			display: inline-block;
+			background: rgba(180, 96, 47, .12);
+			color: #8A4A20;
+			border-radius: 100px;
+			padding: 7px 15px;
+			font-size: 13px;
+			letter-spacing: .04em;
+			margin-bottom: 16px;
+		}
+		.vb-h9z__list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+		.vb-h9z__list li {
+			display: flex;
+			gap: 14px;
+			align-items: flex-start;
+			padding: 16px 0;
+			border-bottom: 1px solid rgba(42, 42, 36, .14);
+		}
+		.vb-h9z__list li img { width: 18px; height: 18px; margin-top: 3px; flex: none; opacity: .7; }
+		.vb-h9z__label { display: block; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: #7A6A52; margin-bottom: 4px; }
+		.vb-h9z__value { font-size: 15.5px; line-height: 1.6; color: #2A2A24; }
+		.vb-h9z__value a {
+			color: #8A4A20;
+			text-decoration: none;
+			position: relative;
+		}
+		.vb-h9z__value a::after {
+			content: "";
+			position: absolute;
+			left: 0;
+			bottom: -2px;
+			width: 100%;
+			height: 1px;
+			background: currentColor;
+			transform: scaleX(0);
+			transform-origin: right;
+			transition: transform .35s ease;
+		}
+		.vb-h9z__value a:hover::after, .vb-h9z__value a:focus-visible::after { transform: scaleX(1); transform-origin: left; }
+		.vb-h9z__socials { display: flex; gap: 12px; margin-top: 22px; flex-wrap: wrap; }
+		.vb-h9z__soc {
+			display: inline-flex;
+			align-items: center;
+			gap: 10px;
+			min-height: 48px;
+			padding: 0 20px;
+			border: 1px solid rgba(42, 42, 36, .26);
+			border-radius: 100px;
+			color: #2A2A24;
+			text-decoration: none;
+			font-size: 14.5px;
+			transition: background-color .35s ease, border-color .35s ease, transform .35s ease;
+		}
+		.vb-h9z__soc:hover { background: rgba(60, 90, 62, .1); border-color: #3C5A3E; transform: translateY(-2px); }
+		.vb-h9z__map {
+			border-radius: 4px;
+			overflow: hidden;
+			border: 1px solid rgba(42, 42, 36, .16);
+			min-height: 420px;
+			height: 100%;
+			background: #E4DAC7;
+		}
+		.vb-h9z__map iframe {
+			width: 100%;
+			height: 100%;
+			min-height: 420px;
+			border: 0;
+			display: block;
+			filter: saturate(.86) contrast(.98);
+		}
+		.vb-h9z__footer {
+			margin-top: clamp(56px, 8vw, 90px);
+			border-top: 1px solid rgba(42, 42, 36, .16);
+			padding: 26px 0 34px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			gap: 18px;
+			flex-wrap: wrap;
+			font-size: 13.4px;
+			color: #6B6A5F;
+		}
+		.vb-h9z__footer a { color: #6B6A5F; text-decoration: none; }
+		.vb-h9z__footer a:hover { color: #2A2A24; }
+		@media (max-width: 960px) {
+			.vb-h9z__grid { grid-template-columns: 1fr; }
+		}
+		@media (max-width: 640px) {
+			.vb-h9z { padding: 64px 18px 0; }
+			.vb-h9z__route { padding: 24px 20px; }
+		}
+	</style>
+	<div class="vb-h9z__wrap">
+		<div class="vb-h9z__head vb-reveal">
+			<p class="vb-h9z__eyebrow">Как добраться и контакты</p>
+			<h2 class="vb-h9z__title" id="vb-h9z-title">Сто двадцать километров <em>до тишины</em></h2>
+			<p class="vb-h9z__lead">Тульская область, Козельский район, сосновый бор на берегу озера Сосновое. Навигатор ведёт точно к воротам — шлагбаум открываем по звонку.</p>
+		</div>
+
+		<div class="vb-h9z__grid">
+			<div class="vb-reveal">
+				<div class="vb-h9z__route">
+					<span class="vb-h9z__badge">120 км по Калужскому шоссе</span>
+					<h3>Маршрут от МКАД</h3>
+					<p>Съезд с МКАД на Калужское шоссе (М-3) → мимо Обнинска и Боровска → съезд на Юхнов, далее по указателям на деревню Мальцево. Около 90 минут без пробок, последний отрезок — 3 км грунтовой дороги, проходим на любом авто летом.</p>
+					<p>На электрокаре — зарядка на ресепшене (Type 2, 11 кВт). Из Тулы — 65 км по Р132 и съезду на Козельск.</p>
+				</div>
+				<ul class="vb-h9z__list">
+					<li>
+						<img src="https://static.tildacdn.pub/lib/icons/tilda/marker_location_place_where.svg" alt="" aria-hidden="true">
+						<span><span class="vb-h9z__label">Адрес</span><span class="vb-h9z__value">Тульская область, Козельский р-н, дер. Мальцево, 3-я Линия, 12 — глэмпинг «Сосновый берег»</span></span>
+					</li>
+					<li>
+						<img src="https://static.tildacdn.pub/lib/icons/tilda/marker_location_place_where.svg" alt="" aria-hidden="true">
+						<span><span class="vb-h9z__label">GPS-координаты</span><span class="vb-h9z__value">54.0912, 35.7844 (въезд через шлагбаум)</span></span>
+					</li>
+					<li>
+						<img src="https://static.tildacdn.pub/lib/icons/tilda/watch_clock_time.svg" alt="" aria-hidden="true">
+						<span><span class="vb-h9z__label">Ресепшен</span><span class="vb-h9z__value">Ежедневно 8:00 — 22:00. Ночью — дежурный по звонку</span></span>
+					</li>
+					<li>
+						<img src="https://static.tildacdn.pub/lib/icons/tilda/phone_contact_call_ring.svg" alt="" aria-hidden="true">
+						<span><span class="vb-h9z__label">Телефон</span><span class="vb-h9z__value"><a href="tel:+74991124567">+7 (499) 112-45-67</a></span></span>
+					</li>
+					<li>
+						<img src="https://static.tildacdn.pub/lib/icons/tilda/envelope_e-mail_mail_post_contact_send.svg" alt="" aria-hidden="true">
+						<span><span class="vb-h9z__label">Почта</span><span class="vb-h9z__value"><a href="mailto:hello@sosnovy-bereg.ru">hello@sosnovy-bereg.ru</a></span></span>
+					</li>
+				</ul>
+				<div class="vb-h9z__socials">
+					<a class="vb-h9z__soc" href="https://t.me/sosnovy_bereg" target="_blank" rel="noopener">
+						<svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 4.3l-3 14.4c-.2 1-.8 1.2-1.7.8l-4.6-3.4-2.2 2.1c-.2.2-.4.4-.9.4l.3-4.7 8.6-7.8c.4-.3-.1-.5-.6-.2L7.8 12.6 3.3 11.2c-1-.3-1-1 .2-1.5l17.4-6.7c.8-.3 1.5.2 1.2 1.3z"/></svg>
+						Telegram
+					</a>
+					<a class="vb-h9z__soc" href="https://vk.com/sosnovy_bereg" target="_blank" rel="noopener">
+						<svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.8 17c-5 0-8-3.5-8.1-9.2h2.5c.1 4.2 2 6 3.5 6.4V7.8h2.4v3.6c1.5-.2 3-1.9 3.5-3.6h2.3c-.4 2.1-2 3.8-3.1 4.5 1.1.6 3 2.1 3.7 4.7h-2.6c-.6-1.8-1.9-3.2-3.8-3.4V17h-.3z"/></svg>
+						VK
+					</a>
+				</div>
+			</div>
+
+			<div class="vb-h9z__map vb-reveal">
+				<iframe src="https://yandex.ru/map-widget/v1/?ll=35.784400%2C54.091200&z=13&pt=35.7844,54.0912,pm2rdm" title="Карта проезда к глэмпингу «Сосновый берег»" loading="lazy" allowfullscreen></iframe>
+			</div>
+		</div>
+
+		<footer class="vb-h9z__footer">
+			<span>© 2024 Глэмпинг «Сосновый берег», Тульская область</span>
+			<span><a href="#vb-k7p-hero" data-scroll>Наверх</a> · <a href="#vb-f6c-booking" data-scroll>Забронировать</a></span>
+		</footer>
+	</div>
+	<script>
+		(function () {
+			var root = document.getElementById('vb-h9z-contacts');
+			root.querySelectorAll('[data-scroll]').forEach(function (a) {
+				a.addEventListener('click', function (e) {
+					var target = document.querySelector(a.getAttribute('href'));
+					if (!target) { return; }
+					e.preventDefault();
+					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
+				});
+			});
+		})();
+	</script>
+</section>
+
+<script>
+	(function () {
+		var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		var items = document.querySelectorAll('.vb-reveal');
+		if (reduce || !('IntersectionObserver' in window)) {
+			items.forEach(function (el) { el.classList.add('is-visible'); el.style.opacity = '1'; el.style.transform = 'none'; });
+			return;
+		}
+		items.forEach(function (el) {
+			el.style.opacity = '0';
+			el.style.transform = 'translateY(26px)';
+			el.style.transition = 'opacity .85s cubic-bezier(.2,.7,.2,1), transform .85s cubic-bezier(.2,.7,.2,1)';
+		});
+		var io = new IntersectionObserver(function (entries) {
+			entries.forEach(function (entry) {
+				if (entry.isIntersecting) {
+					entry.target.style.opacity = '1';
+					entry.target.style.transform = 'none';
+					io.unobserve(entry.target);
+				}
+			});
+		}, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+		items.forEach(function (el) { io.observe(el); });
+	})();
+</script>
