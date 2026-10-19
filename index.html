@@ -293,6 +293,20 @@
 				if (window.scrollY > 60 || panel.classList.contains('is-open')) { root.classList.add('vb-v4x--solid'); }
 				else { root.classList.remove('vb-v4x--solid'); }
 			}
+
+			/* Отступ прокрутки по якорям: высота шапки в «приклеенном»
+			   состоянии + зазор. Шапка уменьшается к моменту остановки
+			   скролла, поэтому меряем именно её финальную высоту */
+			window.vbNavOffset = function () {
+				var prevTransition = root.style.transition;
+				root.style.transition = 'none';
+				var wasSolid = root.classList.contains('vb-v4x--solid');
+				root.classList.add('vb-v4x--solid');
+				var h = root.offsetHeight;
+				if (!wasSolid) { root.classList.remove('vb-v4x--solid'); }
+				root.style.transition = prevTransition;
+				return h + 8;
+			};
 			setSolid();
 			window.addEventListener('scroll', setSolid, { passive: true });
 
@@ -328,8 +342,7 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var nav = document.getElementById('vb-v4x-nav');
-					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var offset = window.vbNavOffset ? window.vbNavOffset() : 80;
 					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
@@ -503,8 +516,7 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var nav = document.getElementById('vb-v4x-nav');
-					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var offset = window.vbNavOffset ? window.vbNavOffset() : 80;
 					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
@@ -1145,8 +1157,7 @@
 							return false;
 						});
 					}
-					var nav = document.getElementById('vb-v4x-nav');
-					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var offset = window.vbNavOffset ? window.vbNavOffset() : 80;
 					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
@@ -1992,8 +2003,7 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var nav = document.getElementById('vb-v4x-nav');
-					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var offset = window.vbNavOffset ? window.vbNavOffset() : 80;
 					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
@@ -2198,8 +2208,7 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var nav = document.getElementById('vb-v4x-nav');
-					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var offset = window.vbNavOffset ? window.vbNavOffset() : 80;
 					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
