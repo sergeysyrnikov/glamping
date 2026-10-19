@@ -100,10 +100,14 @@
 			align-items: center;
 			justify-content: space-between;
 			gap: 24px;
+			position: relative;
+			z-index: 2;
 		}
 		.vb-v4x--solid {
-			background: rgba(240, 233, 221, .94);
-			backdrop-filter: blur(8px);
+			/* Непрозрачный фон вместо backdrop-filter: filter/backdrop-filter
+			   у предка становится containing block для position:fixed потомков
+			   и «схлопывал» панель бургер-меню до высоты шапки */
+			background: #F0E9DD;
 			box-shadow: 0 1px 0 rgba(42, 42, 36, .12);
 			padding: 12px 0;
 		}
@@ -205,13 +209,18 @@
 		.vb-v4x__burger[aria-expanded="true"] span::after { top: 0; background: #2A2A24; transform: rotate(-45deg); }
 		.vb-v4x__panel {
 			position: fixed;
-			inset: 0;
+			top: 0;
+			left: 0;
+			width: 100vw;
+			height: 100vh;
+			height: 100dvh;
 			background: #EFE7DA;
 			padding: 110px 30px 40px;
 			display: none;
 			flex-direction: column;
 			gap: 6px;
-			z-index: 89;
+			overflow-y: auto;
+			z-index: 1;
 		}
 		.vb-v4x__panel.is-open { display: flex; }
 		.vb-v4x__panel-link {
@@ -281,7 +290,7 @@
 			var panel = root.querySelector('.vb-v4x__panel');
 
 			function setSolid() {
-				if (window.scrollY > 60) { root.classList.add('vb-v4x--solid'); }
+				if (window.scrollY > 60 || panel.classList.contains('is-open')) { root.classList.add('vb-v4x--solid'); }
 				else { root.classList.remove('vb-v4x--solid'); }
 			}
 			setSolid();
@@ -292,6 +301,7 @@
 				burger.setAttribute('aria-expanded', 'false');
 				burger.setAttribute('aria-label', 'Открыть меню');
 				document.documentElement.style.overflow = '';
+				setSolid();
 			}
 			burger.addEventListener('click', function () {
 				var open = burger.getAttribute('aria-expanded') === 'true';
@@ -301,6 +311,7 @@
 					burger.setAttribute('aria-expanded', 'true');
 					burger.setAttribute('aria-label', 'Закрыть меню');
 					document.documentElement.style.overflow = 'hidden';
+					root.classList.add('vb-v4x--solid');
 				}
 			});
 			panel.addEventListener('click', function (e) {
@@ -448,7 +459,7 @@
 			.vb-k7p__bg { animation: none; }
 		}
 	</style>
-	<div class="vb-k7p__bg" role="img" aria-label="Лоджи у озера на рассвете, туман над водой в сосновом лесу"></div>
+	<div class="vb-k7p__bg" role="img" aria-label="Домики у озера на рассвете, туман над водой в сосновом лесу"></div>
 	<div class="vb-k7p__scrim"></div>
 	<div class="vb-k7p__content">
 		<span class="vb-k7p__badge">
@@ -456,7 +467,7 @@
 			Сосновый берег · сезон май — октябрь
 		</span>
 		<h1 class="vb-k7p__title" id="vb-k7p-title">Тишина, вода и <em>сосновый</em> воздух</h1>
-		<p class="vb-k7p__offer">Глэмпинг в сосновом лесу у озера — 90 минут от Москвы, Тульская область. Двенадцать лоджей и шатров, печи, чай на травах и никаких уведомлений.</p>
+		<p class="vb-k7p__offer">Глэмпинг в сосновом лесу у озера — 90 минут от Москвы, Тульская область. Двенадцать домиков и шатров, печи, чай на травах и никаких уведомлений.</p>
 		<div class="vb-k7p__actions">
 			<a class="t-btnflex t-btnflex_lg" href="#vb-f6c-booking" data-scroll>
 				<span class="t-btnflex__text">Забронировать</span>
@@ -466,7 +477,7 @@
 		<ul class="vb-k7p__facts">
 			<li>
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 20l9-16 9 16H3z" stroke-linejoin="round"/></svg>
-				12 лоджей и шатров
+				12 домиков и шатров
 			</li>
 			<li>
 				<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M3 15c2.5-2 5-2 7.5 0s5 2 7.5 0 3-1.5 3-1.5M3 19c2.5-2 5-2 7.5 0s5 2 7.5 0" stroke-linecap="round"/><path d="M12 4v5" stroke-linecap="round"/></svg>
@@ -505,7 +516,7 @@
 			background: #F1E9DC;
 			color: #2A2A24;
 			font-family: var(--t-text-font);
-			padding: clamp(72px, 10vw, 130px) 24px;
+			padding: clamp(40px, 6vw, 72px) 24px clamp(72px, 10vw, 130px);
 		}
 		.vb-m3q__wrap { max-width: 1280px; margin: 0 auto; }
 		.vb-m3q__grid {
@@ -620,7 +631,7 @@
 			.vb-m3q__eco { grid-template-columns: repeat(2, 1fr); }
 		}
 		@media (max-width: 640px) {
-			.vb-m3q { padding: 64px 18px; }
+			.vb-m3q { padding: 40px 18px 64px; }
 			.vb-m3q__stats { grid-template-columns: 1fr; gap: 12px; }
 			.vb-m3q__eco { grid-template-columns: 1fr; }
 			.vb-m3q__figure--small { display: none; }
@@ -631,12 +642,12 @@
 			<div>
 				<p class="vb-m3q__eyebrow">О нас</p>
 				<h2 class="vb-m3q__title" id="vb-m3q-title">Простая жизнь <em>без отказа</em> от комфорта</h2>
-				<p class="vb-m3q__text">Мы поставили лоджи на берегу озера Сосновое так, чтобы из каждого окна были сосны и вода. Внутри — тёплое дерево, льняное бельё, печь и чайная станция с травами с нашего луга. Никаких мини-баров, телевизоров и расписаний анимации: только тишина, простота и возвращение к природе.</p>
+				<p class="vb-m3q__text">Мы поставили домики на берегу озера Сосновое так, чтобы из каждого окна были сосны и вода. Внутри — тёплое дерево, льняное бельё, печь и чайная станция с травами с нашего луга. Никаких мини-баров, телевизоров и расписаний анимации: только тишина, простота и возвращение к природе.</p>
 				<p class="vb-m3q__text">От МКАД по Калужскому шоссе — 120 км, около 90 минут без пробок. Тула в 65 км: доехать за час за хлебом и сыром, если захотите.</p>
 				<ul class="vb-m3q__stats">
 					<li><b>90 минут</b><span>от МКАД по Калужскому шоссе</span></li>
 					<li><b>65 км</b><span>до Тулы, фермерские рынки и сыры</span></li>
-					<li><b>40 м</b><span>от лоджей до берега озера</span></li>
+					<li><b>40 м</b><span>от домиков до берега озера</span></li>
 				</ul>
 			</div>
 			<div class="vb-m3q__media">
@@ -644,7 +655,7 @@
 					<img src="https://static.tildacdn.pub/tild3830-6437-4162-b939-346231326139/photo-1477862096227-.jpg" alt="Сосновый бор в утреннем свете" loading="lazy">
 				</figure>
 				<figure class="vb-m3q__figure vb-m3q__figure--small">
-					<img src="https://static.tildacdn.pub/tild6161-3361-4564-b763-323164363231/photo-1591195854242-.jpg" alt="Льняное бельё и плед в лодже" loading="lazy">
+					<img src="https://static.tildacdn.pub/tild6161-3361-4564-b763-323164363231/photo-1591195854242-.jpg" alt="Льняное бельё и плед в домике" loading="lazy">
 				</figure>
 			</div>
 		</div>
@@ -658,7 +669,7 @@
 			<article class="vb-m3q__eco-item vb-reveal">
 				<img src="https://static.tildacdn.pub/lib/icons/tilda/wi-fi_wifi_network_internet.svg" alt="" aria-hidden="true">
 				<h3>Сеть по расписанию</h3>
-				<p>Роутер работает в ресепшене с 8:00 до 20:00. В лоджах — только мобильная связь, по вечерам тишина.</p>
+				<p>Роутер работает в ресепшене с 8:00 до 20:00. В домиках — только мобильная связь, по вечерам тишина.</p>
 			</article>
 			<article class="vb-m3q__eco-item vb-reveal">
 				<img src="https://static.tildacdn.pub/lib/icons/tilda/fire_bonfire.svg" alt="" aria-hidden="true">
@@ -674,7 +685,7 @@
 
 		<p class="vb-m3q__season vb-reveal">
 			<span><strong>Сезон:</strong> май — октябрь, купание с конца июня.</span>
-			<span><strong>Зима:</strong> открываем даты с печкой с декабря по февраль, по 4 лоджи.</span>
+			<span><strong>Зима:</strong> открываем даты с печкой с декабря по февраль, по 4 домика.</span>
 		</p>
 	</div>
 </section>
@@ -686,7 +697,7 @@
 			background: #EDE4D4;
 			color: #2A2A24;
 			font-family: var(--t-text-font);
-			padding: clamp(72px, 10vw, 130px) 24px;
+			padding: clamp(40px, 6vw, 72px) 24px clamp(72px, 10vw, 130px);
 		}
 		.vb-r8d__wrap { max-width: 1280px; margin: 0 auto; }
 		.vb-r8d__head { max-width: 62ch; margin-bottom: 42px; }
@@ -857,7 +868,7 @@
 			.vb-r8d__banner { aspect-ratio: 16 / 9; }
 		}
 		@media (max-width: 640px) {
-			.vb-r8d { padding: 64px 18px; }
+			.vb-r8d { padding: 40px 18px 64px; }
 			.vb-r8d__tabs {
 				flex-wrap: nowrap;
 				overflow-x: auto;
@@ -874,11 +885,11 @@
 		<div class="vb-r8d__head vb-reveal">
 			<p class="vb-r8d__eyebrow">Номера и цены</p>
 			<h2 class="vb-r8d__title" id="vb-r8d-title">Двенадцать домиков <em>у воды</em> и в бору</h2>
-			<p class="vb-r8d__lead">Цены указаны за ночь для двух гостей в сезон май — октябрь. В каждую лоджу входят завтрак из фермерских продуктов, льдина с питьевой водой и комплект полотенец.</p>
+			<p class="vb-r8d__lead">Цены указаны за ночь для двух гостей в сезон май — октябрь. В каждый домик входят завтрак из фермерских продуктов, льдина с питьевой водой и комплект полотенец.</p>
 		</div>
 
 		<div class="vb-r8d__tabs" role="tablist" aria-label="Категории размещения">
-			<button class="vb-r8d__tab" id="vb-r8d-tab-1" role="tab" aria-selected="true" aria-controls="vb-r8d-panel-1" type="button">Лоджи у озера</button>
+			<button class="vb-r8d__tab" id="vb-r8d-tab-1" role="tab" aria-selected="true" aria-controls="vb-r8d-panel-1" type="button">Домики у озера</button>
 			<button class="vb-r8d__tab" id="vb-r8d-tab-2" role="tab" aria-selected="false" aria-controls="vb-r8d-panel-2" tabindex="-1" type="button">Шатры в сосновом бору</button>
 			<button class="vb-r8d__tab" id="vb-r8d-tab-3" role="tab" aria-selected="false" aria-controls="vb-r8d-panel-3" tabindex="-1" type="button">Семейный домик</button>
 			<button class="vb-r8d__tab" id="vb-r8d-tab-4" role="tab" aria-selected="false" aria-controls="vb-r8d-panel-4" tabindex="-1" type="button">Баня на дровах</button>
@@ -886,44 +897,44 @@
 
 		<div class="vb-r8d__panel" id="vb-r8d-panel-1" role="tabpanel" aria-labelledby="vb-r8d-tab-1" tabindex="0">
 			<figure class="vb-r8d__banner">
-				<img src="https://static.tildacdn.pub/tild3531-6462-4065-b461-363064343432/photo-1454916286212-.jpg" alt="Лоджи у озера на рассвете" loading="lazy">
-				<figcaption>Четыре лоджи на 40 метров от берега, терраса с гамаком в каждой</figcaption>
+				<img src="https://static.tildacdn.pub/tild3531-6462-4065-b461-363064343432/photo-1454916286212-.jpg" alt="Домики у озера на рассвете" loading="lazy">
+				<figcaption>Четыре домика на 40 метров от берега, терраса с гамаком в каждой</figcaption>
 			</figure>
 			<div class="vb-r8d__grid">
 				<article class="vb-r8d__card">
-					<div class="vb-r8d__card-top"><h3>Лоджа «Тихая»</h3><span class="vb-r8d__area">28 м²</span></div>
+					<div class="vb-r8d__card-top"><h3>Домик «Тихая»</h3><span class="vb-r8d__area">28 м²</span></div>
 					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Печь-камин</li><li>Вид на сосны</li></ul>
 					<ul class="vb-r8d__equip"><li>Двуспальная кровать с льняным бельём</li><li>Чайная станция: травы, кофе, термос</li><li>Душ и санузел внутри</li><li>Терраса с двумя креслами</li></ul>
 					<div class="vb-r8d__card-foot">
 						<p class="vb-r8d__price">от 9 500 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
-						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Тихая»"><span class="t-btnflex__text">Выбрать</span></a>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Тихая»"><span class="t-btnflex__text">Выбрать</span></a>
 					</div>
 				</article>
 				<article class="vb-r8d__card">
-					<div class="vb-r8d__card-top"><h3>Лоджа «Сосновая»</h3><span class="vb-r8d__area">32 м²</span></div>
+					<div class="vb-r8d__card-top"><h3>Домик «Сосновая»</h3><span class="vb-r8d__area">32 м²</span></div>
 					<ul class="vb-r8d__meta"><li>2 + 1 гость</li><li>Печь-камин</li><li>Панорамное окно</li></ul>
 					<ul class="vb-r8d__equip"><li>Спальня и диван-кровать</li><li>Кухня: чайник, мини-холодильник</li><li>Камин на дровах (дрова — 600 ₽/сетка)</li><li>Гамак на террасе</li></ul>
 					<div class="vb-r8d__card-foot">
 						<p class="vb-r8d__price">от 11 000 ₽ <small>за ночь, 2–3 гостя · завтрак включён</small></p>
-						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Сосновая»"><span class="t-btnflex__text">Выбрать</span></a>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Сосновая»"><span class="t-btnflex__text">Выбрать</span></a>
 					</div>
 				</article>
 				<article class="vb-r8d__card">
-					<div class="vb-r8d__card-top"><h3>Лоджа «Мостки»</h3><span class="vb-r8d__area">34 м²</span></div>
+					<div class="vb-r8d__card-top"><h3>Домик «Мостки»</h3><span class="vb-r8d__area">34 м²</span></div>
 					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Выход к воде</li><li>Дровяная печь</li></ul>
 					<ul class="vb-r8d__equip"><li>Собственный мосток и лодка на бочках</li><li>Ванна у окна, биоразлагаемая косметика</li><li>Термос и чайная станция</li><li>Полотенца и халаты</li></ul>
 					<div class="vb-r8d__card-foot">
 						<p class="vb-r8d__price">от 12 500 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
-						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Мостки»"><span class="t-btnflex__text">Выбрать</span></a>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Мостки»"><span class="t-btnflex__text">Выбрать</span></a>
 					</div>
 				</article>
 				<article class="vb-r8d__card">
-					<div class="vb-r8d__card-top"><h3>Лоджа «Рассвет»</h3><span class="vb-r8d__area">30 м²</span></div>
+					<div class="vb-r8d__card-top"><h3>Домик «Рассвет»</h3><span class="vb-r8d__area">30 м²</span></div>
 					<ul class="vb-r8d__meta"><li>2 гостя</li><li>Восток, вид на озеро</li><li>Печь-камин</li></ul>
-					<ul class="vb-r8d__equip"><li>Кровать у окна: рассвет над водой</li><li>Купель на террасе (холодная вода круглосуточно)</li><li>Чайная станция, льдина с водой</li><li>Парковка у лоджи</li></ul>
+					<ul class="vb-r8d__equip"><li>Кровать у окна: рассвет над водой</li><li>Купель на террасе (холодная вода круглосуточно)</li><li>Чайная станция, льдина с водой</li><li>Парковка у домика</li></ul>
 					<div class="vb-r8d__card-foot">
 						<p class="vb-r8d__price">от 13 900 ₽ <small>за ночь, 2 гостя · завтрак включён</small></p>
-						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Лоджа «Рассвет»"><span class="t-btnflex__text">Выбрать</span></a>
+						<a class="t-btnflex t-btnflex_sm" href="#vb-f6c-booking" data-scroll data-room="Домик «Рассвет»"><span class="t-btnflex__text">Выбрать</span></a>
 					</div>
 				</article>
 			</div>
@@ -1145,7 +1156,7 @@
 			background: #F1E9DC;
 			color: #2A2A24;
 			font-family: var(--t-text-font);
-			padding: clamp(72px, 10vw, 130px) 24px;
+			padding: clamp(40px, 6vw, 72px) 24px clamp(72px, 10vw, 130px);
 		}
 		.vb-t5w__wrap { max-width: 1280px; margin: 0 auto; }
 		.vb-t5w__head { max-width: 60ch; margin-bottom: 42px; }
@@ -1212,7 +1223,7 @@
 		.vb-t5w__dur { font-size: 13px; color: #7A6A52; letter-spacing: .04em; }
 		@media (max-width: 1040px) { .vb-t5w__grid { grid-template-columns: repeat(2, 1fr); } }
 		@media (max-width: 640px) {
-			.vb-t5w { padding: 64px 18px; }
+			.vb-t5w { padding: 40px 18px 64px; }
 			.vb-t5w__grid { grid-template-columns: 1fr; }
 		}
 	</style>
@@ -1300,7 +1311,7 @@
 			background: #2F4634;
 			color: #F1E9DC;
 			font-family: var(--t-text-font);
-			padding: clamp(72px, 10vw, 130px) 0;
+			padding: clamp(40px, 6vw, 72px) 0 clamp(72px, 10vw, 130px);
 			overflow: hidden;
 		}
 		.vb-y2n__head {
@@ -1347,6 +1358,17 @@
 			margin: 0 auto;
 			scrollbar-width: none;
 			-webkit-overflow-scrolling: touch;
+			touch-action: pan-y;
+			cursor: grab;
+		}
+		.vb-y2n__track.is-dragging {
+			cursor: grabbing;
+			user-select: none;
+			-webkit-user-select: none;
+		}
+		.vb-y2n__track.is-dragging .vb-y2n__card:hover {
+			transform: none;
+			background: rgba(241, 233, 220, .07);
 		}
 		.vb-y2n__track::-webkit-scrollbar { display: none; }
 		.vb-y2n__card {
@@ -1403,9 +1425,9 @@
 	<div class="vb-y2n__track" tabindex="0" aria-label="Галерея отзывов гостей">
 		<article class="vb-y2n__card">
 			<p class="vb-y2n__stars" aria-label="Оценка 5 из 5">★★★★★</p>
-			<p class="vb-y2n__text">Приехали в июле на две ночи, уезжать не хотелось. Лоджа «Мостки» — вода в сорока шагах, утром туман и никакого звука кроме птиц. Завтрак приносят к террасе: сырники, молоко, ягоды.</p>
+			<p class="vb-y2n__text">Приехали в июле на две ночи, уезжать не хотелось. Домик «Мостки» — вода в сорока шагах, утром туман и никакого звука кроме птиц. Завтрак приносят к террасе: сырники, молоко, ягоды.</p>
 			<div class="vb-y2n__foot">
-				<div class="vb-y2n__who"><b>Марина К.</b><span>Июль 2024 · Лоджа «Мостки»</span></div>
+				<div class="vb-y2n__who"><b>Марина К.</b><span>Июль 2024 · Домик «Мостки»</span></div>
 				<span class="vb-y2n__src">Яндекс Карты</span>
 			</div>
 		</article>
@@ -1429,7 +1451,7 @@
 			<p class="vb-y2n__stars" aria-label="Оценка 5 из 5">★★★★★</p>
 			<p class="vb-y2n__text">Взяли йогу на пирсе в 7:30 и рыбалку после — два разных ощущения одного озера. Администратор Настя подобрала снасти под наше утро и рассказала, где клюёт окунь. Мелочи, а держатся.</p>
 			<div class="vb-y2n__foot">
-				<div class="vb-y2n__who"><b>Ольга В.</b><span>Июнь 2024 · Лоджа «Тихая»</span></div>
+				<div class="vb-y2n__who"><b>Ольга В.</b><span>Июнь 2024 · Домик «Тихая»</span></div>
 				<span class="vb-y2n__src">2ГИС</span>
 			</div>
 		</article>
@@ -1446,14 +1468,119 @@
 		(function () {
 			var root = document.getElementById('vb-y2n-reviews');
 			var track = root.querySelector('.vb-y2n__track');
+
 			root.querySelectorAll('.vb-y2n__arrow').forEach(function (btn) {
 				btn.addEventListener('click', function () {
+					stopInertia();
 					var dir = parseInt(btn.getAttribute('data-dir'), 10);
 					var card = track.querySelector('.vb-y2n__card');
 					var step = card ? card.getBoundingClientRect().width + 22 : 380;
 					track.scrollBy({ left: dir * step, behavior: 'smooth' });
 				});
 			});
+
+			/* Перетаскивание мышкой и пальцем */
+			var dragging = false;
+			var startX = 0;
+			var startScroll = 0;
+			var lastX = 0;
+			var lastTime = 0;
+			var velocity = 0;
+			var inertiaId = null;
+			var moved = false;
+
+			function stopInertia() {
+				if (inertiaId) {
+					cancelAnimationFrame(inertiaId);
+					inertiaId = null;
+				}
+				track.style.scrollSnapType = '';
+			}
+
+			function startInertia() {
+				if (Math.abs(velocity) < 0.1) {
+					track.style.scrollSnapType = '';
+					return;
+				}
+				inertiaId = requestAnimationFrame(function step() {
+					velocity *= 0.94;
+					track.scrollLeft -= velocity * 16;
+					if (Math.abs(velocity) > 0.05) {
+						inertiaId = requestAnimationFrame(step);
+					} else {
+						inertiaId = null;
+						track.style.scrollSnapType = '';
+					}
+				});
+			}
+
+			track.addEventListener('pointerdown', function (e) {
+				if (e.pointerType === 'mouse' && e.button !== 0) { return; }
+				stopInertia();
+				dragging = true;
+				moved = false;
+				startX = e.clientX;
+				lastX = e.clientX;
+				startScroll = track.scrollLeft;
+				lastTime = performance.now();
+				velocity = 0;
+				track.classList.add('is-dragging');
+				/* Отключаем snap, чтобы перетаскивание было плавным */
+				track.style.scrollSnapType = 'none';
+				if (track.setPointerCapture) {
+					try { track.setPointerCapture(e.pointerId); } catch (err) {}
+				}
+			});
+
+			track.addEventListener('pointermove', function (e) {
+				if (!dragging) { return; }
+				var dx = e.clientX - startX;
+				if (!moved && Math.abs(dx) < 4) { return; }
+				moved = true;
+				e.preventDefault();
+				track.scrollLeft = startScroll - dx;
+				var now = performance.now();
+				var dt = now - lastTime;
+				if (dt > 0) {
+					velocity = (e.clientX - lastX) / dt;
+					lastX = e.clientX;
+					lastTime = now;
+				}
+			});
+
+			function endDrag(e) {
+				if (!dragging) { return; }
+				dragging = false;
+				track.classList.remove('is-dragging');
+				if (e && e.type === 'pointercancel') {
+					track.style.scrollSnapType = '';
+					return;
+				}
+				if (moved) {
+					startInertia();
+				} else {
+					track.style.scrollSnapType = '';
+				}
+			}
+
+			track.addEventListener('pointerup', endDrag);
+			track.addEventListener('pointercancel', endDrag);
+			track.addEventListener('lostpointercapture', endDrag);
+
+			/* Запрет выделения текста и перетаскивания картинок во время драга */
+			track.addEventListener('dragstart', function (e) {
+				if (dragging || moved) { e.preventDefault(); }
+			});
+			track.addEventListener('selectstart', function (e) {
+				if (dragging || moved) { e.preventDefault(); }
+			});
+			track.addEventListener('click', function (e) {
+				if (moved) {
+					e.preventDefault();
+					e.stopPropagation();
+					moved = false;
+				}
+			}, true);
 		})();
 	</script>
 </section>
@@ -1466,7 +1593,7 @@
 			background: #EDE4D4;
 			color: #2A2A24;
 			font-family: var(--t-text-font);
-			padding: clamp(72px, 10vw, 130px) 24px;
+			padding: clamp(40px, 6vw, 72px) 24px clamp(72px, 10vw, 130px);
 		}
 		.vb-f6c__wrap {
 			max-width: 1180px;
@@ -1540,7 +1667,7 @@
 			display: flex;
 			gap: 12px;
 			align-items: flex-start;
-			margin: 22px 0 26px;
+			margin: 22px 0 8px;
 			font-size: 13.6px;
 			line-height: 1.6;
 			color: #56564B;
@@ -1553,6 +1680,7 @@
 			accent-color: #3C5A3E;
 		}
 		.vb-f6c__check a { color: #8A4A20; }
+		.vb-f6c__check-error { margin: 0 0 18px 32px; }
 		.vb-f6c__submit { width: 100%; justify-content: center; }
 		.vb-f6c__fine { margin: 14px 0 0; font-size: 12.8px; color: #7A6A52; text-align: center; }
 		.vb-f6c__success {
@@ -1581,11 +1709,17 @@
 		.vb-f6c__success p { margin: 0; font-size: 15.5px; line-height: 1.65; color: #56564B; }
 		.vb-f6c .js-errorbox-all { display: none; margin-bottom: 16px; padding: 12px 16px; background: rgba(160, 52, 39, .08); border-radius: 3px; color: #A03427; font-size: 13.6px; }
 		.vb-f6c .js-errorbox-all.is-visible { display: block; }
+		.vb-f6c__card input.is-invalid,
+		.vb-f6c__card select.is-invalid {
+			border-color: #A03427;
+			box-shadow: 0 0 0 3px rgba(160, 52, 39, .12);
+		}
+		.vb-f6c__check input.is-invalid { outline: 2px solid #A03427; outline-offset: 2px; }
 		@media (max-width: 960px) {
 			.vb-f6c__wrap { grid-template-columns: 1fr; }
 		}
 		@media (max-width: 640px) {
-			.vb-f6c { padding: 64px 18px; }
+			.vb-f6c { padding: 40px 18px 64px; }
 			.vb-f6c__grid { grid-template-columns: 1fr; }
 		}
 	</style>
@@ -1593,11 +1727,11 @@
 		<div class="vb-reveal">
 			<p class="vb-f6c__eyebrow">Бронирование</p>
 			<h2 class="vb-f6c__title" id="vb-f6c-title">Забронировать <em>даты</em></h2>
-			<p class="vb-f6c__lead">Оставьте заявку — проверим свободные лоджи и перезвоним. Предоплата 30%, отмена без штрафа за 5 дней до заезда.</p>
+			<p class="vb-f6c__lead">Оставьте заявку — проверим свободные домики и перезвоним. Предоплата 30%, отмена без штрафа за 5 дней до заезда.</p>
 			<ul class="vb-f6c__list">
-				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/calendar_date_schedule.svg" alt="" aria-hidden="true">Заезд с 15:00, выезд до 12:00. Ранний заезд — если лоджа свободна.</li>
+				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/calendar_date_schedule.svg" alt="" aria-hidden="true">Заезд с 15:00, выезд до 12:00. Ранний заезд — если домик свободен.</li>
 				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/phone_contact_call_ring.svg" alt="" aria-hidden="true">Ответим в течение часа с 8:00 до 22:00, в ночное время — утром.</li>
-				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/tree_trees.svg" alt="" aria-hidden="true">Со своей едой — пожалуйста: в лоджах холодильник и мангал.</li>
+				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/tree_trees.svg" alt="" aria-hidden="true">Со своей едой — пожалуйста: в домиках холодильник и мангал.</li>
 				<li><img src="https://static.tildacdn.pub/lib/icons/tilda/watch_clock_time.svg" alt="" aria-hidden="true">Сезон май — октябрь. Зимние даты с печкой открываются в сентябре.</li>
 			</ul>
 		</div>
@@ -1614,7 +1748,7 @@
 					<p><strong>Мы свяжемся с вами для подтверждения брони в течение часа.</strong></p>
 				</div>
 
-				<div class="js-errorbox-all" id="vb-f6c-errorbox">
+				<div class="js-errorbox-all" id="vb-f6c-errorbox" aria-live="polite">
 					<div class="js-rule-error-all"></div>
 				</div>
 
@@ -1643,11 +1777,11 @@
 						<label for="vb-f6c-room">Номер</label>
 						<select id="vb-f6c-room" name="Номер" class="js-tilda-rule" data-tilda-req="1">
 							<option value="">Выберите номер</option>
-							<optgroup label="Лоджи у озера">
-								<option>Лоджа «Тихая»</option>
-								<option>Лоджа «Сосновая»</option>
-								<option>Лоджа «Мостки»</option>
-								<option>Лоджа «Рассвет»</option>
+							<optgroup label="Домики у озера">
+								<option>Домик «Тихая»</option>
+								<option>Домик «Сосновая»</option>
+								<option>Домик «Мостки»</option>
+								<option>Домик «Рассвет»</option>
 							</optgroup>
 							<optgroup label="Шатры в сосновом бору">
 								<option>Шатёр «Бор»</option>
@@ -1681,6 +1815,7 @@
 					<input type="checkbox" name="Согласие" value="да" class="js-tilda-rule" data-tilda-req="1">
 					<span>Согласен на обработку персональных данных и получение ответа по заявке. <a href="#vb-h9z-contacts" data-scroll>Политика конфиденциальности</a></span>
 				</label>
+				<div class="t-input-error vb-f6c__check-error" id="vb-f6c-consent-error"></div>
 
 				<button type="submit" class="t-submit t-btnflex t-btnflex_md vb-f6c__submit">
 					<span class="t-btnflex__text">Забронировать</span>
@@ -1712,13 +1847,127 @@
 				if (outField.value && outField.value <= inField.value) { outField.value = ''; }
 			});
 
+			var fields = {
+				name: document.getElementById('vb-f6c-name'),
+				phone: document.getElementById('vb-f6c-phone'),
+				room: document.getElementById('vb-f6c-room'),
+				guests: document.getElementById('vb-f6c-guests'),
+				consent: form.querySelector('input[name="Согласие"]')
+			};
+			var consentError = document.getElementById('vb-f6c-consent-error');
+			var errorBox = document.getElementById('vb-f6c-errorbox');
+			var errorAll = errorBox.querySelector('.js-rule-error-all');
+
+			function setFieldError(field, message) {
+				field.classList.add('is-invalid');
+				field.setAttribute('aria-invalid', 'true');
+				var group = field.closest('.vb-input-group');
+				var box = group && group.querySelector('.t-input-error');
+				if (box) { box.textContent = message; }
+			}
+
+			function clearFieldError(field) {
+				field.classList.remove('is-invalid');
+				field.removeAttribute('aria-invalid');
+				var group = field.closest('.vb-input-group');
+				var box = group && group.querySelector('.t-input-error');
+				if (box) { box.textContent = ''; }
+			}
+
+			function validateForm() {
+				var messages = [];
+				[fields.name, fields.phone, inField, outField, fields.room, fields.guests].forEach(clearFieldError);
+				fields.consent.classList.remove('is-invalid');
+				consentError.textContent = '';
+
+				var nameVal = fields.name.value.trim();
+				if (!nameVal) {
+					setFieldError(fields.name, 'Укажите имя');
+					messages.push('Укажите имя');
+				} else if (nameVal.length < 2 || !/^[A-Za-zА-Яа-яЁё][A-Za-zА-Яа-яЁё\s'’-]*$/.test(nameVal)) {
+					setFieldError(fields.name, 'Имя: минимум 2 буквы, без цифр');
+					messages.push('Имя: минимум 2 буквы, без цифр');
+				}
+
+				var phoneDigits = fields.phone.value.replace(/\D/g, '');
+				if (phoneDigits.length === 11 && (phoneDigits.charAt(0) === '7' || phoneDigits.charAt(0) === '8')) {
+					phoneDigits = phoneDigits.slice(1);
+				}
+				if (phoneDigits.length !== 10) {
+					setFieldError(fields.phone, 'Укажите телефон полностью: +7 (___) ___-__-__');
+					messages.push('Укажите телефон полностью');
+				}
+
+				if (!inField.value) {
+					setFieldError(inField, 'Выберите дату заезда');
+					messages.push('Выберите дату заезда');
+				} else if (inField.value < today) {
+					setFieldError(inField, 'Дата заезда не может быть в прошлом');
+					messages.push('Дата заезда не может быть в прошлом');
+				}
+
+				if (!outField.value) {
+					setFieldError(outField, 'Выберите дату выезда');
+					messages.push('Выберите дату выезда');
+				} else if (inField.value && outField.value <= inField.value) {
+					setFieldError(outField, 'Дата выезда должна быть позже даты заезда');
+					messages.push('Дата выезда должна быть позже даты заезда');
+				}
+
+				if (!fields.room.value) {
+					setFieldError(fields.room, 'Выберите номер');
+					messages.push('Выберите номер');
+				}
+
+				var guests = parseInt(fields.guests.value, 10);
+				if (!fields.guests.value || isNaN(guests) || guests < 1 || guests > 6) {
+					setFieldError(fields.guests, 'Укажите количество гостей от 1 до 6');
+					messages.push('Укажите количество гостей от 1 до 6');
+				}
+
+				if (!fields.consent.checked) {
+					fields.consent.classList.add('is-invalid');
+					consentError.textContent = 'Необходимо согласие на обработку персональных данных';
+					messages.push('Подтвердите согласие на обработку данных');
+				}
+
+				if (messages.length) {
+					errorAll.innerHTML = '<strong>Проверьте заполнение формы:</strong><br>' + messages.join('<br>');
+					errorBox.classList.add('is-visible');
+					var firstInvalid = form.querySelector('.is-invalid');
+					if (firstInvalid) {
+						firstInvalid.scrollIntoView({ block: 'center', behavior: 'smooth' });
+						firstInvalid.focus({ preventScroll: true });
+					}
+					return false;
+				}
+
+				errorBox.classList.remove('is-visible');
+				errorAll.innerHTML = '';
+				return true;
+			}
+
+			[fields.name, fields.phone, inField, outField, fields.room, fields.guests, fields.consent].forEach(function (field) {
+				function clear() {
+					clearFieldError(field);
+					if (field === fields.consent) {
+						consentError.textContent = '';
+					}
+					errorBox.classList.remove('is-visible');
+				}
+				field.addEventListener('input', clear);
+				field.addEventListener('change', clear);
+			});
+
 			form.addEventListener('submit', function (event) {
 				event.preventDefault();
 				if (window.tildaForm && window.tildaForm.hideErrors) {
 					window.tildaForm.hideErrors(form);
-					var errors = window.tildaForm.validate(form);
-					var hasErrors = window.tildaForm.showErrors(form, errors);
-					if (hasErrors) { return; }
+				}
+				if (!validateForm()) { return; }
+				if (window.tildaForm && window.tildaForm.validate && window.tildaForm.showErrors) {
+					var tildaErrors = window.tildaForm.validate(form);
+					if (window.tildaForm.showErrors(form, tildaErrors)) { return; }
 				}
 				form.style.display = 'none';
 				thanks.classList.add('is-visible');
@@ -1727,6 +1976,7 @@
 
 			if (window.t_forms__initBtnClick) {
 				submitButton.addEventListener('click', function () {
+					if (!validateForm()) { return; }
 					window.t_forms__initBtnClick({ target: submitButton, srcElement: submitButton, preventDefault: function () {} });
 				});
 			}
@@ -1751,7 +2001,7 @@
 			background: #F1E9DC;
 			color: #2A2A24;
 			font-family: var(--t-text-font);
-			padding: clamp(72px, 10vw, 130px) 24px 0;
+			padding: clamp(40px, 6vw, 72px) 24px 0;
 		}
 		.vb-h9z__wrap { max-width: 1280px; margin: 0 auto; }
 		.vb-h9z__head { max-width: 60ch; margin-bottom: 42px; }
@@ -1869,7 +2119,7 @@
 			.vb-h9z__grid { grid-template-columns: 1fr; }
 		}
 		@media (max-width: 640px) {
-			.vb-h9z { padding: 64px 18px 0; }
+			.vb-h9z { padding: 40px 18px 0; }
 			.vb-h9z__route { padding: 24px 20px; }
 		}
 	</style>
