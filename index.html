@@ -328,7 +328,9 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					var nav = document.getElementById('vb-v4x-nav');
+					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
 			});
@@ -501,7 +503,9 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					var nav = document.getElementById('vb-v4x-nav');
+					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
 			});
@@ -1141,7 +1145,9 @@
 							return false;
 						});
 					}
-					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					var nav = document.getElementById('vb-v4x-nav');
+					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
 			});
@@ -1986,7 +1992,9 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					var nav = document.getElementById('vb-v4x-nav');
+					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
 			});
@@ -2190,7 +2198,9 @@
 					var target = document.querySelector(a.getAttribute('href'));
 					if (!target) { return; }
 					e.preventDefault();
-					var top = target.getBoundingClientRect().top + window.scrollY - 8;
+					var nav = document.getElementById('vb-v4x-nav');
+					var offset = (nav ? nav.offsetHeight : 0) + 20;
+					var top = target.getBoundingClientRect().top + window.scrollY - offset;
 					window.scrollTo({ top: Math.max(top, 0), behavior: 'smooth' });
 				});
 			});
