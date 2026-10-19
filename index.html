@@ -305,7 +305,7 @@
 				var h = root.offsetHeight;
 				if (!wasSolid) { root.classList.remove('vb-v4x--solid'); }
 				root.style.transition = prevTransition;
-				return h + 3;
+				return h;
 			};
 			setSolid();
 			window.addEventListener('scroll', setSolid, { passive: true });
