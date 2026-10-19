@@ -1,10 +1,88 @@
 <header class="vb-v4x" id="vb-v4x-nav" data-section-name="Навигация" data-vibeblock-unique-section="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<style>
-        .body {
+        body {
             margin: 0 !important;
             padding: 0 !important;
         }
+		html, body { overflow-x: hidden; }
+
+		/* ===== Кнопки t-btnflex — общий стиль сайта ===== */
+		.t-btnflex {
+			display: inline-flex;
+			align-items: center;
+			justify-content: center;
+			gap: 10px;
+			box-sizing: border-box;
+			margin: 0;
+			border: 1px solid transparent;
+			border-radius: 100px;
+			font-family: var(--t-text-font);
+			font-size: 15px;
+			font-weight: 400;
+			line-height: 1.2;
+			letter-spacing: .04em;
+			text-align: center;
+			text-decoration: none;
+			white-space: nowrap;
+			cursor: pointer;
+			min-height: 54px;
+			padding: 0 32px;
+			transition: background-color .35s ease, color .35s ease, border-color .35s ease, transform .35s ease, box-shadow .35s ease;
+			-webkit-tap-highlight-color: transparent;
+		}
+		.t-btnflex__text { display: inline-block; }
+		.t-btnflex:hover { transform: translateY(-2px); }
+		.t-btnflex:active { transform: translateY(0); }
+		.t-btnflex:focus-visible { outline: 2px solid #8A4A20; outline-offset: 3px; }
+		.t-btnflex_sm { min-height: 46px; padding: 0 24px; font-size: 14px; }
+		.t-btnflex_md { min-height: 54px; padding: 0 32px; font-size: 15px; }
+		.t-btnflex_lg { min-height: 56px; padding: 0 38px; font-size: 15.5px; }
+
+		/* Навигация: кремовая на фото, зелёная на светлой шапке */
+		.vb-v4x__cta {
+			background: #F6F0E4;
+			border-color: #F6F0E4;
+			color: #2A2A24;
+			box-shadow: 0 12px 28px -16px rgba(20, 24, 18, .7);
+		}
+		.vb-v4x__cta:hover { background: #FFFDF8; border-color: #FFFDF8; }
+		.vb-v4x--solid .vb-v4x__cta {
+			background: #3C5A3E;
+			border-color: #3C5A3E;
+			color: #F6F0E4;
+			box-shadow: 0 12px 28px -18px rgba(42, 42, 36, .7);
+		}
+		.vb-v4x--solid .vb-v4x__cta:hover { background: #32492F; border-color: #32492F; }
+
+		/* Обложка: основная кремовая кнопка рядом с контурной */
+		.vb-k7p__actions .t-btnflex {
+			background: #F6F0E4;
+			border-color: #F6F0E4;
+			color: #2A2A24;
+			box-shadow: 0 18px 40px -22px rgba(20, 24, 18, .85);
+		}
+		.vb-k7p__actions .t-btnflex:hover { background: #FFFDF8; border-color: #FFFDF8; }
+
+		/* Карточки номеров: терракотовая «Выбрать» в тон ценам */
+		.vb-r8d__card .t-btnflex {
+			background: #B4602F;
+			border-color: #B4602F;
+			color: #FDF8EF;
+			box-shadow: 0 12px 26px -16px rgba(138, 74, 32, .75);
+		}
+		.vb-r8d__card .t-btnflex:hover { background: #8A4A20; border-color: #8A4A20; }
+
+		/* Форма бронирования: зелёная кнопка отправки */
+		.vb-f6c__submit {
+			background: #3C5A3E;
+			border-color: #3C5A3E;
+			color: #F6F0E4;
+			min-height: 56px;
+			box-shadow: 0 16px 34px -20px rgba(60, 90, 62, .8);
+		}
+		.vb-f6c__submit:hover { background: #32492F; border-color: #32492F; }
+
 		.vb-v4x, .vb-v4x * { box-sizing: border-box; }
 		.vb-v4x {
 			position: fixed;
@@ -662,7 +740,9 @@
 			position: relative;
 			border-radius: 4px;
 			overflow: hidden;
-			margin-bottom: 30px;
+			margin: 0 0 30px;
+			width: 100%;
+			max-width: 100%;
 			aspect-ratio: 21 / 8;
 			min-height: 220px;
 		}
